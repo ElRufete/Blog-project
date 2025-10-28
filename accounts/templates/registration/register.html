@@ -1,0 +1,30 @@
+{% extends "blog/layout.html" %}
+
+
+
+<head>
+    {% load django_bootstrap5 %}
+    <title>Register</title>
+</head>
+
+<body>
+{% block page_header %}
+
+    <div class="p-3 mb-1 blackboard centered">
+        <h2 class="text-center">Únete a la comunidad</h2>
+    </div>
+{% endblock page_header %}
+
+{% block content%}
+    <div class="blackboard p-3 mb-2 bg-dark text-white">
+        <div class="centered">
+            <form action="{% url 'accounts:register' %}" method='post'>
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                {% bootstrap_button button_type="submit" content="Crear cuenta" %}
+            </form>
+        </div>
+    </div>
+{% endblock content%}
+
+</body>

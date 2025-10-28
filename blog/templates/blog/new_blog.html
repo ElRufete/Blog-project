@@ -1,0 +1,30 @@
+{% extends "blog/layout.html" %}
+{% load django_bootstrap5 %}
+
+    <title>Home</title>
+
+{% block page_header %}
+
+<div class="p-3 mb-1 blackboard centered text-center">
+        <h1> Nuevo Blog </h1>
+</div>
+{% endblock page_header %}
+
+
+{% block content%}
+
+    <div class="p-3 mb-1 blackboard">
+        <div class="centered">
+            <p>Título del blog</p>
+            <form action="{% url 'blog:new_blog' %}" method='post'>
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    {% bootstrap_button button_type="submit" content="Publicar" %}
+            </form>
+            <p class="me-auto p-2">
+                <a href="{% url 'blog:blogs_list' %}">&laquo; Atrás </a>
+            </p>
+        </div>
+    </div>
+
+{%endblock content%}

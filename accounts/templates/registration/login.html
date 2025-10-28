@@ -1,0 +1,33 @@
+{% extends "blog/layout.html" %}
+{% load django_bootstrap5 %}
+<head>
+    <title>Log in</title>
+</head>
+
+<body>
+{% block page_header %}
+
+    <div class="p-3 mb-1 blackboard centered">
+        <h2 class="text-center">Inicia sesión en tu cuenta</h2>
+    </div>
+{% endblock page_header %}
+
+{% block content%}
+    <div class="blackboard p-3 mb-2">
+        <div class="centered">
+            <form action="{% url 'accounts:login' %}" method='post'>
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                {% bootstrap_button button_type="submit" content="Entrar" %}
+            </form>
+        </div>
+        
+    </div>
+    <div class="message-link">
+            <p class="medium">¿Aún tienes una cuenta?</p>
+            <a class="push-up" href="{% url 'accounts:register' %}">¡Regístrate!</a>
+    </div>
+    </div>
+{% endblock content%}
+
+</body>

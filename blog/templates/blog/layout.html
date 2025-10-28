@@ -1,0 +1,56 @@
+{% load static %}
+{% load django_bootstrap5 %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Blogoteca</title>
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% bootstrap_javascript %}
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark mb-4 navbar-style">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+            data-bs-target="#navbarCollapse" aria-controlls="navbarCollapse" 
+            aria-expanded="false" aria-label="toggle-navigation">
+                <span class="navbar-toggler-icon me-auto"></span>
+            </button>
+            <div class="collapse navbar-collapse ms-auto" id="navbarCollapse">
+                <ul class="navbar-nav me-auto mb-md-0">
+                    <li class="nav-item"> 
+                        <a href="{% url 'blog:home' %}">Portada</a>
+                    </li>
+                        <span class="d-none d-md-inline">|</span>
+                    <li class="nav-item">
+                        <a href="{% url 'blog:blogs_list' %}">Blogs</a>
+                        <span class="d-none d-md-inline">|</span></li>
+                </ul>
+                <ul class="navbar-nav ms-auto mb-2 mb-md-0 pt-0 align-items-md-center">
+                {% if user.is_authenticated %}
+                    <li class="nav-item d-none d-md-inline">¡Hola, {{ user.username }}!</li>
+                    <span class="d-none d-md-inline">|</span>
+                    <form action="{% url 'accounts:logout' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="logout-button nav-item">Cerrar sesión</button>
+                    </form>
+                {% else %}
+                    <li class="nav-item">
+                    <a href="{% url 'accounts:login' %}">Acceder</a> 
+                    <span class="d-none d-md-inline">|</span></li>
+                    <li class="nav-item">
+                    <a href="{% url 'accounts:register' %}">Registrarse</a> </li>
+                {% endif %}
+
+                </ul>
+            </div>  
+        </div>
+    </nav>
+    {% block page_header %} {% endblock page_header %}
+    {% block content%} {% endblock content%}
+</body>
+</html>

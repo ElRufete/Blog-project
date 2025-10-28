@@ -1,0 +1,31 @@
+{% extends "blog/layout.html" %}
+
+<title>Home</title>
+{% block content%}
+<div class="blackboard">
+    <div class="centered border-bottom pb-3">
+        <h2>  {{ blog.text }} </h2>
+        <p class="message-link c">Creado por {{ blog.author }} el {{ blog.date_added }}</p>
+        {% if blog.author == request.user %}
+        <div class=push-up>
+                <a href="{% url 'blog:new_entry' blog.id %}"> Nueva Entrada </a>
+        </div>
+    {% endif %}                                                                                                       
+    </div>
+    <ul class="list-group pb-3 mb-4 border-bottom">
+        {% for entry in entries %}
+            <li class="list-group-item">
+              <a href="{% url 'blog:entry' blog.id entry.id %}">{{entry.title}}</a>  
+            </li>
+        {%empty%}
+            <li>Aún no hay entradas para este tema. ¡Estrénalo!</li>
+        {% endfor %}
+            
+    </ul>
+    <p class="me-auto p-2">
+        <a href="{% url 'blog:blogs_list' %}">&laquo; Atrás </a>
+    </p>
+
+    
+</div>
+{%endblock content%}
