@@ -12,18 +12,18 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 Django settings for www project.
 """
-
+import dj_database_url
 import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# ⚠️ Nunca dejes la clave secreta expuesta en producción
+#Nunca dejes la clave secreta expuesta en producción
 # Usa variables de entorno en Render:
 # En Render, la defines en el panel de Environment → SECRET_KEY
 SECRET_KEY = os.environ.get('SECRET_KEY', 'clave-de-desarrollo')
 
-# 🚀 Desactiva el modo debug en producción
+#Desactiva el modo debug en producción
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 # Render agregará automáticamente tu dominio, pero puedes añadir otros si quieres
@@ -88,12 +88,22 @@ WSGI_APPLICATION = 'www.wsgi.application'
 
 
 # Base de datos (Render usará una variable DATABASE_URL si la defines)
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+
+if os.environ.get('RENDER'):
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.environ.get('DATABASE_URL'),
+            conn_max_age=600,  
+        )
     }
-}
+
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Validación de contraseñas
@@ -112,13 +122,11 @@ USE_I18N = True
 USE_TZ = True
 
 
-# 🧱 Archivos estáticos y media
+#Archivos estáticos y media
 STATIC_URL = '/static/'
 
-# Esta línea es crucial para Render
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Esto mejora la entrega de estáticos en producción
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
