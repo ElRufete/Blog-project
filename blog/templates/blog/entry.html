@@ -14,6 +14,7 @@
 
     <div class="pt-4 pb-3 border-bottom">
         {% if entry.banner %}
+            <p> image route: {{ entry.banner.url }} </p>
             <img 
             class = "img-fluid w-50 mx-3 rounded banner"
             src = "{{ entry.banner.url }}"
