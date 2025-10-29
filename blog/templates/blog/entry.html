@@ -16,7 +16,8 @@
         {% if entry.banner %}
             <img 
             class = "img-fluid w-50 mx-3 rounded banner"
-            src = {{ entry.banner.url }}>
+            src = "{{ entry.banner.url }}"
+            alt = "{{ entry.title }}">
         {% endif %}
         <p>{{ entry.text| linebreaksbr}}</p>
     </div> 
