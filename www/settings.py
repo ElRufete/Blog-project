@@ -16,6 +16,10 @@ import dj_database_url
 import os
 from pathlib import Path
 
+import cloudinary
+import cloudinary_storage
+
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 #Nunca dejes la clave secreta expuesta en producción
@@ -35,14 +39,7 @@ if RENDER_EXTERNAL_HOSTNAME:
 
 # Apps
 INSTALLED_APPS = [
-    # Tus apps
-    'blog',
-    'accounts',
-
-    # Terceros
-    'django_bootstrap5',
-    'cloudinary_storage'
-
+   
     # Django apps
     'django.contrib.admin',
     'django.contrib.auth',
@@ -50,6 +47,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+     # Terceros
+    'django_bootstrap5',
+    'cloudinary_storage',
+    'cloudinary',
+
+     # Tus apps
+    'blog',
+    'accounts',
+    
 ]
 
 MIDDLEWARE = [
@@ -130,14 +137,8 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'drudyw2gl',
-    'API_KEY': '611483512455415',
-    'API_SECRET': 'BCxUp1veNwtrIvomM7VsEKD5kXY'
-}
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -146,3 +147,30 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'blog:blogs_list'
 LOGOUT_REDIRECT_URL = 'blog:home'
 LOGIN_URL = 'accounts:login'
+
+#Archivos media
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+#configuración de Cloudinary
+"""
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'drudyw2gl',
+    'API_KEY': '611483512455415',
+    'API_SECRET': '',
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+"""
+cloudinary.config( 
+  cloud_name = os.environ.get('CLOUDINARY_CLOUD_NAME'), 
+  api_key = os.environ.get('CLOUDINARY_API_KEY'), 
+  api_secret = os.environ.get('CLOUDINARY_API_SECRET') 
+)
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
