@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     # Terceros
     'django_bootstrap5',
+    'cloudinary_storage'
 
     # Django apps
     'django.contrib.admin',
@@ -131,7 +132,12 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'drudyw2gl',
+    'API_KEY': '611483512455415',
+    'API_SECRET': 'BCxUp1veNwtrIvomM7VsEKD5kXY'
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
