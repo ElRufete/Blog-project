@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 class Blog(models.Model):
     text = models.CharField(max_length=140)
     date_added = models.DateTimeField(auto_now_add=True)
@@ -17,7 +18,10 @@ class Entry(models.Model):
     title = models.CharField(max_length=50, default= 'Nueva entrada')
     text = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
-    banner = models.ImageField(blank = True)
+    banner = models.ImageField(upload_to='banners/',
+                                blank=True, 
+                                null=True, 
+                                )
 
     def __str__(self):
         return self.title

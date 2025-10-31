@@ -152,25 +152,44 @@ LOGIN_URL = 'accounts:login'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-#configuración de Cloudinary
-"""
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'drudyw2gl',
-    'API_KEY': '611483512455415',
-    'API_SECRET': '',
-}
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+#cloudinary config
 
-"""
+import cloudinary
+import cloudinary_storage
+
 cloudinary.config( 
   cloud_name = os.environ.get('CLOUDINARY_CLOUD_NAME'), 
   api_key = os.environ.get('CLOUDINARY_API_KEY'), 
-  api_secret = os.environ.get('CLOUDINARY_API_SECRET') 
+  api_secret = os.environ.get('CLOUDINARY_API_SECRET'), 
 )
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
     'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
     'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+    'SECURE': True,  
 }
+
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+
+
+
+import sys
+
+# Verificar que Cloudinary esté funcionando
+try:
+    from django.core.files.storage import default_storage
+    if not 'cloudinary' in default_storage.__class__.__name__.lower():
+        print("⚠️  ADVERTENCIA: No se está usando Cloudinary como almacenamiento por defecto")
+        print(f"   Storage actual: {default_storage.__class__}")
+        
+        # Forzar re-import
+        from django.core.files.storage import default_storage
+        from cloudinary_storage.storage import MediaCloudinaryStorage
+        default_storage = MediaCloudinaryStorage()
+        print(f"   Storage tras forzar reimport: {default_storage.__class__}")
+        
+except Exception as e:
+    print(f"Error verificando storage: {e}")
+
