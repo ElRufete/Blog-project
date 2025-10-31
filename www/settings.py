@@ -16,8 +16,8 @@ import dj_database_url
 import os
 from pathlib import Path
 
-import cloudinary
-import cloudinary_storage
+
+
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -158,9 +158,9 @@ import cloudinary
 import cloudinary_storage
 
 cloudinary.config( 
-  cloud_name = os.environ.get('CLOUDINARY_CLOUD_NAME'), 
-  api_key = os.environ.get('CLOUDINARY_API_KEY'), 
-  api_secret = os.environ.get('CLOUDINARY_API_SECRET'), 
+  cloud_name = os.environ.get('CLOUDINARY_CLOUD_NAME'),
+  api_key =  os.environ.get('CLOUDINARY_API_KEY'),
+  api_secret = os.environ.get('CLOUDINARY_API_SECRET'),
 )
 
 CLOUDINARY_STORAGE = {
@@ -174,6 +174,7 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
 
+print("CLOUDINARY_CLOUD_NAME =>", os.environ.get('CLOUDINARY_CLOUD_NAME'))
 
 import sys
 
@@ -193,3 +194,4 @@ try:
 except Exception as e:
     print(f"Error verificando storage: {e}")
 
+print("CLOUDINARY_CLOUD_NAME =>", os.environ.get('CLOUDINARY_CLOUD_NAME'))
