@@ -15,7 +15,9 @@ Django settings for www project.
 import dj_database_url
 import os
 from pathlib import Path
+from www.cloudinary_setup import setup_cloudinary
 
+setup_cloudinary()
 
 
 
@@ -172,6 +174,12 @@ CLOUDINARY_STORAGE = {
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
+
+# --- DEBUG CLOUDINARY ---
+from django.core.files.storage import default_storage
+print("🧾 DEFAULT_FILE_STORAGE =>", DEFAULT_FILE_STORAGE)
+print("🧩 Storage usado por defecto =>", default_storage.__class__)
+print("🌩️ CLOUDINARY CONFIG =>", CLOUDINARY_STORAGE)
 
 
 
