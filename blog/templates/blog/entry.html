@@ -4,22 +4,27 @@
 {% block content%}
 <div class=blackboard>
     
-    <div class="centered pb-4 border-bottom">
+    <div class="pb-3 border-bottom centered">
         <h2>{{ entry.title }}</h2>
         <p>Añadida el {{ entry.date_added }} por {{ blog.author }}</p>
-        {% if blog.author == request.user %}
-            <a href="{% url 'blog:edit_entry' entry.id %}"> Editar Entrada </a>
-        {% endif %}
-    </div> 
+    </div>
+    {% if blog.author == request.user %}
+        <div class="blog-options pb-3 pt-3 border-bottom">
+            <div class="me-auto">
+                <a href="{% url 'blog:edit_entry' entry.id %}"> Editar </a>
+            </div>
+            <div class="ms-auto">
+                <form action="{% url 'blog:delete_entry' entry.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="logout-button">🗑️ Eliminar</button>
+                </form>
+            </div>
+        </div>
 
-    <div class="pt-4 pb-3 border-bottom">
-        {% if entry.banner %}
-            <p> image route: {{ entry.banner.url }} </p>
-            <img 
-            class = "img-fluid w-50 mx-3 rounded banner"
-            src = "{{ entry.banner.url }}"
-            alt = "{{ entry.title }}">
         {% endif %}
+    
+
+    <div class="pt-4 pb-3 border-bottom  stretch-line">
         <p>{{ entry.text| linebreaksbr}}</p>
     </div> 
     <p class="me-auto p-2 pt-4">

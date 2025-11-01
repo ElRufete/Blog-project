@@ -172,3 +172,13 @@ a:hover{
 .banner {
     float: left;
 }
+
+.blog-options{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.stretch-line{
+    align-items: stretch;
+}

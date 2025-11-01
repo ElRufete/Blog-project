@@ -30,7 +30,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY', 'clave-de-desarrollo')
 
 #Desactiva el modo debug en producción
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+#DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+DEBUG = True
 
 # Render agregará automáticamente tu dominio, pero puedes añadir otros si quieres
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
@@ -192,11 +193,6 @@ CLOUDINARY_STORAGE = {
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
-# --- DEBUG CLOUDINARY ---
-from django.core.files.storage import default_storage
-print("🧾 DEFAULT_FILE_STORAGE =>", DEFAULT_FILE_STORAGE)
-print("🧩 Storage usado por defecto =>", default_storage.__class__)
-print("🌩️ CLOUDINARY CONFIG =>", CLOUDINARY_STORAGE)
 
 
 

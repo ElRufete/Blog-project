@@ -61,7 +61,7 @@ def new_entry(request, blog_id):
             new_entry = form.save(commit=False)
             new_entry.blog = blog
             new_entry.save()
-            return redirect('blog:entries_list', blog_id=blog.id)
+            return redirect('blog:entries_list', blog.id)
 
     context = {'blog' : blog, 'form': form}
     return render(request, 'blog/new_entry.html', context)
@@ -81,6 +81,29 @@ def edit_entry(request, entry_id):
         
     context = {'entry':entry, 'blog':blog, 'form':form}
     return render (request, 'blog/edit_entry.html', context)
+
+@login_required
+def delete_entry(request, entry_id):
+    if request.method == 'POST':
+        entry = Entry.objects.get(id=entry_id)
+        blog = entry.blog
+        check_author(request, blog.author)
+        entry.delete()
+        return redirect('blog:entries_list', blog.id)
+    else:
+        return redirect('blog:entries_list', blog.id)
+    
+@login_required
+def delete_blog(request, blog_id):
+    
+    if request.method == 'POST':
+        blog = Blog.objects.get(id=blog_id)
+        check_author(request, blog.author)
+        blog.delete()
+        return redirect('blog:blogs_list')
+    else:
+        return redirect('blog:blogs_list')
+    
 
 def check_author(request, author):
     if author != request.user:

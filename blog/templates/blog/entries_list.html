@@ -6,12 +6,21 @@
     <div class="centered border-bottom pb-3">
         <h2>  {{ blog.text }} </h2>
         <p class="message-link c">Creado por {{ blog.author }} el {{ blog.date_added }}</p>
-        {% if blog.author == request.user %}
-        <div class=push-up>
-                <a href="{% url 'blog:new_entry' blog.id %}"> Nueva Entrada </a>
-        </div>
-    {% endif %}                                                                                                       
     </div>
+    {% if blog.author == request.user %}
+        <div class="blog-options pb-3 pt-3 border-bottom">
+            <div class="push-up me-auto">
+                    <a href="{% url 'blog:new_entry' blog.id %}"> Nueva Entrada </a>
+            </div>
+            <div class=" push-up ms-auto">
+                    <form action="{% url 'blog:delete_blog' blog.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="logout-button">🗑️ Eliminar</button>
+                    </form>
+                </div>
+        </div>
+    {% endif %} 
+
     <ul class="list-group pb-3 mb-4 border-bottom">
         {% for entry in entries %}
             <li class="list-group-item">
