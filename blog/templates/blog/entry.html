@@ -1,4 +1,5 @@
 {% extends "blog/layout.html" %}
+{% load django_bootstrap5%}
 
 <title>Home</title>
 {% block content%}
@@ -20,15 +21,44 @@
                 </form>
             </div>
         </div>
-
         {% endif %}
     
-
-    <div class="pt-4 pb-3 border-bottom  stretch-line">
+    <div class="pt-4 pb-3 stretch-line">
         <p>{{ entry.text| linebreaksbr}}</p>
-    </div> 
-    <p class="me-auto p-2 pt-4">
-        <a href="{% url 'blog:entries_list' blog.id %}">&laquo; Atrás </a>
-    </p>
-</div>
+    </div>
+    <div class= "blog-options p-2 pt-4 border-bottom" style="--bs-border-opacity: .5;"> 
+        <div class="me-auto">
+            <a href="{% url 'blog:entries_list' blog.id %}">&laquo; Atrás </a>
+        </div>
+        <div class="ms-auto">
+            <a href="{% url 'blog:comment_entry' entry.id %}"> Comentar </a>
+        </div>
+    </div>
+        {% if comments %}
+        {% for comment in comments %}
+            <div class="comment-bar pb-1">
+                <div class="comment-text ms-auto">
+                    <p>{{comment.author}}, el {{comment.date_added}}</p>
+                </div>
+            </div>
+            <div class="comment-text pb-1">
+                <p>{{comment.text | linebreaks}}</p>
+            </div>
+            <div class="comment-text border-bottom pb-2 ms-auto" 
+            style="--bs-border-opacity: .5;">
+                <a href="{% url 'blog:comment_response' comment.id %}"> Responder </a>
+            </div>
+            {% for response in comment.commentresponse_set.all %}
+                <div class="comment-bar pb-1">
+                    <div class="comment-text ms-auto">
+                        <p>{{response.author}} respondió:</p>
+                    </div>
+                </div>
+                <div class="comment-text border-bottom pb-2" style="--bs-border-opacity: .5;">
+                    <p>{{response.text | linebreaks}}</p>
+                </div>
+            {% endfor %}
+        {% endfor %}
+        {% endif %}  
+</div>    
 {%endblock content%}

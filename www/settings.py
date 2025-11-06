@@ -17,6 +17,7 @@ import os
 from pathlib import Path
 from www.cloudinary_setup import setup_cloudinary
 
+
 setup_cloudinary()
 
 
@@ -56,6 +57,7 @@ CLOUDINARY_STORAGE = {
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 
 # Apps
 INSTALLED_APPS = [

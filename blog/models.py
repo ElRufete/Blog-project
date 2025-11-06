@@ -26,6 +26,23 @@ class Entry(models.Model):
     def __str__(self):
         return self.title
     
+class EntryComment(models.Model):
+    entry = models.ForeignKey(Entry, on_delete=models.CASCADE)
+    text = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.text
+
+class CommentResponse(models.Model):
+    comment = models.ForeignKey(EntryComment, on_delete=models.CASCADE)
+    text = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.text
 
 
 

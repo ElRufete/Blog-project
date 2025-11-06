@@ -1,0 +1,26 @@
+{% extends "blog/layout.html" %}
+{% load django_bootstrap5 %}
+
+    <title>Respuesta</title>
+
+{% block page_header %}
+
+<div class="p-3 mb-1 blackboard centered text-center">
+        <h1> Responder a {{comment.author}} </h1>
+</div>
+{% endblock page_header %}
+
+
+{% block content%}
+
+    <div class="p-3 mb-1 blackboard">
+        <div class="centered">
+            <form action="{% url 'blog:comment_response' comment.id %}" method='post'>
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                {% bootstrap_button button_type="submit" content="Responder" %}
+            </form>
+        </div>
+    </div>
+
+{%endblock content%}
