@@ -35,30 +35,47 @@
         </div>
     </div>
         {% if comments %}
-        {% for comment in comments %}
-            <div class="comment-bar pb-1">
-                <div class="comment-text ms-auto">
-                    <p>{{comment.author}}, el {{comment.date_added}}</p>
-                </div>
-            </div>
-            <div class="comment-text pb-1">
-                <p>{{comment.text | linebreaks}}</p>
-            </div>
-            <div class="comment-text border-bottom pb-2 ms-auto" 
-            style="--bs-border-opacity: .5;">
-                <a href="{% url 'blog:comment_response' comment.id %}"> Responder </a>
-            </div>
-            {% for response in comment.commentresponse_set.all %}
-                <div class="comment-bar pb-1">
-                    <div class="comment-text ms-auto">
-                        <p>{{response.author}} respondió:</p>
+            {% for comment in comments %}
+                <div class="comment-bar pb-2">
+                    <div class="comment-bar me-auto">
+                        <p>{{comment.author}}, el {{comment.date_added}}:</p>
                     </div>
                 </div>
-                <div class="comment-text border-bottom pb-2" style="--bs-border-opacity: .5;">
-                    <p>{{response.text | linebreaks}}</p>
+                <div class="comment-text pb-1">
+                    <p>{{comment.text | linebreaks}}</p>
                 </div>
+                <div class="comment-bar border-bottom pb-2">
+                    <div style="--bs-border-opacity: .5;">
+                            <a href="{% url 'blog:comment_response' comment.id %}"> 
+                                Responder </a>
+                    </div>
+                    {% if comment.author == request.user %}
+                        <div style="--bs-border-opacity: .5;">
+                            <form action="{% url 'blog:delete_comment' comment.id %}" 
+                            method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="logout-button">Borrar</button>
+                            </form>
+                        </div>
+                    {% endif %}
+                </div>
+            <div>
+            <div class="border-bottom">
+                {% for response in comment.commentresponse_set.all %}
+                <div class="response-block border-start">
+                    <div class="comment-bar pb-1">
+                        <div class="comment-bar ms-8">
+                            <p>{{response.author}} respondió:</p>
+                        </div>
+                    </div>
+                    <div class="comment-text border-bottom pb-2" 
+                    style="--bs-border-opacity: .5;">
+                        <p>{{response.text | linebreaks}}</p>
+                    </div>
+                </div>
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
         {% endif %}  
+        
 </div>    
 {%endblock content%}

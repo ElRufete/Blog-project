@@ -27,7 +27,7 @@ def entry(request,blog_id,entry_id):
     blog = Blog.objects.get(id=blog_id)
     entry = Entry.objects.get(id=entry_id)
     entries = Entry.objects.all()
-    comments = entry.entrycomment_set.order_by('-date_added')
+    comments = entry.entrycomment_set.order_by('date_added')
     context= {
         'blog': blog,
         'entry': entry,
@@ -155,9 +155,36 @@ def delete_blog(request, blog_id):
     else:
         return redirect('blog:blogs_list')
     
+@login_required
+def delete_comment(request, comment_id):
+
+    comment = EntryComment.objects.get(id=comment_id)
+    entry = comment.entry
+    blog = entry.blog
+    if request.method == 'POST':
+        check_author(request, comment.author)
+        comment.delete()
+        return redirect('blog:entry', blog.id, entry.id)
+    else:
+        return redirect('blog:entry', blog.id, entry.id)
+    
+@login_required
+def delete_response(request, comment_id):
+    response = CommentResponse.objects.get(id=comment_id)
+    comment = response.comment
+    entry = comment.entry
+    blog = entry.blog
+    if request.method == 'POST':
+        check_author(request, response.author)
+        response.delete()
+        return redirect('blog:entry', blog.id, entry.id)
+    else:
+        return redirect('blog:entry', blog.id, entry.id)
+    
 
 def check_author(request, author):
     if author != request.user:
         raise Http404
+
 
 

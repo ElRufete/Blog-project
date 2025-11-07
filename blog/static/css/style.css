@@ -47,7 +47,7 @@ a:hover{
     display: flex;
     flex-direction: column;
     background-image: linear-gradient(to right,#0b3104, #072203) ;
-    font-family:'Comic Sans MS';
+    font-family:'Comic Sans MS', 'Comic Sans', 'Chalkboard SE';
     border: solid 0.5rem burlywood;
     border-radius: 0.5rem;
     max-height: fit-content;
@@ -120,7 +120,7 @@ a:hover{
 .logout-button {
     all: unset;                 
     color: beige;               
-    font-family: 'Comic Sans MS', 'Comic Sans';
+    font-family: 'Comic Sans MS', 'Comic Sans', 'Chalkboard SE';
     font-size: 1.2rem;
     cursor: pointer;
     margin: 0 0.5rem;
@@ -177,6 +177,30 @@ a:hover{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    font-size: small;
+}
+
+.blog-options a{
+    font-size: 1rem;
+}
+
+.blog-options button{
+    all: unset;                 
+    color: beige;               
+    font-family: 'Comic Sans MS', 'Comic Sans', 'Chalkboard SE';
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 0 0.5rem;
+    text-decoration: underline;
+}
+
+.blog-options button:hover{
+    color: lightseagreen
+}
+
+.blog-options button:visited{
+    margin-top: 0.5rem;
+    color: beige;
 }
 
 .stretch-line{
@@ -184,13 +208,48 @@ a:hover{
 }
 
 .comment-bar{
+    margin-top: 0.5rem;
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
-    font-size: x-small;
+    justify-content: space-between;
+    font-size: small;
 }
 
 .comment-text{
     text-align: start;
-    font-size: small;
+    font-size: 1rem;
+}
+
+.comment-bar a{
+    font-size: 1rem;
+    color: beige;
+}
+.comment-bar a:visited{
+    color: beige;
+}
+.comment-bar a:hover{
+    color: lightseagreen;
+}
+
+.comment-bar button{
+    all: unset;                 
+    color: beige;               
+    font-family: 'Comic Sans MS', 'Comic Sans', 'Chalkboard SE';
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 0 0.5rem;
+    text-decoration: underline;
+}
+
+.comment-bar button:hover{
+    color: lightseagreen
+}
+
+.comment-bar button:visited{
+    color: beige
+}
+
+.response-block{
+    margin-left: 1.5rem;
+    padding-left: 0.5rem
 }

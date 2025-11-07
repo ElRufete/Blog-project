@@ -14,5 +14,10 @@ urlpatterns = [
     path('blogs/<int:entry_id>/delete_entry', views.delete_entry, name='delete_entry'),
     path('blogs/<int:blog_id>/delete_blog', views.delete_blog, name='delete_blog'),
     path('blogs/<int:entry_id>/comment_entry', views.comment_entry, name='comment_entry'),
-    path('blogs/<int:comment_id>/comment_response', views.comment_response, name='comment_response'),
+    path('blogs/<int:comment_id>/comment_response', 
+         views.comment_response, name='comment_response'),
+    path('blogs/<int:comment_id>/delete_comment', 
+         views.delete_comment, name='delete_comment'),
+    path('blogs/<int:response_id>/delete_response', 
+         views.delete_response, name='delete_response'),
 ]
