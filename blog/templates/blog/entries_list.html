@@ -3,6 +3,9 @@
 <title>Home</title>
 {% block content%}
 <div class="blackboard">
+    <p class="me-auto p-2 blog-options">
+        <a href="{% url 'blog:blogs_list' %}">&laquo; Atrás </a>
+    </p>
     <div class="centered border-bottom pb-3">
         <h2>  {{ blog.text }} </h2>
         <p class="message-link c">Creado por {{ blog.author }} el {{ blog.date_added }}</p>
@@ -31,9 +34,7 @@
         {% endfor %}
             
     </ul>
-    <p class="me-auto p-2">
-        <a href="{% url 'blog:blogs_list' %}">&laquo; Atrás </a>
-    </p>
+    
 
     
 </div>

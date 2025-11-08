@@ -169,8 +169,8 @@ def delete_comment(request, comment_id):
         return redirect('blog:entry', blog.id, entry.id)
     
 @login_required
-def delete_response(request, comment_id):
-    response = CommentResponse.objects.get(id=comment_id)
+def delete_response(request, response_id):
+    response = CommentResponse.objects.get(id=response_id)
     comment = response.comment
     entry = comment.entry
     blog = entry.blog
