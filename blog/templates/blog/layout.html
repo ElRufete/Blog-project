@@ -11,9 +11,10 @@
     {% bootstrap_css %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     {% bootstrap_javascript %}
+    
 </head>
 <body>
-    <nav class="navbar navbar-expand-md navbar-dark mb-4 navbar-style">
+    <nav class="navbar navbar-expand-md navbar-dark navbar-style">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
             data-bs-target="#navbarCollapse" aria-controlls="navbarCollapse" 
@@ -31,8 +32,39 @@
                         <span class="d-none d-md-inline">|</span></li>
                 </ul>
                 <ul class="navbar-nav ms-auto mb-2 mb-md-0 pt-0 align-items-md-center">
-                {% if user.is_authenticated %}
-                    <li class="nav-item d-none d-md-inline">¡Hola, {{ user.username }}!</li>
+                {% if request.user.is_authenticated %}
+                    {% if request.user.first_name %}
+                        <div class="greeting">
+                            <li class="nav-item d-none d-md-inline">¡Hola,<a 
+                                href="{% url 'accounts:user_profile' request.user.id %}">{{ request.user.first_name }}</a>!</li>
+                            <span class="d-none d-md-inline">|</span>
+                        </div>
+                    {% else %}
+                        <div class="greeting">
+                            <li class=" nav-item d-none d-md-inline ">¡Hola,<a 
+                                href="{% url 'accounts:user_profile' request.user.id %}">
+                                {{ request.user.user_name }}</a>!</li>
+                            <span class="d-none d-md-inline">|</span>
+                        </div>
+                    {% endif %}
+                    <li class="nav-item"> 
+                        <a href="{% url 'friends:friends_page' %}">Amigos</a>
+                    </li>
+                    <span class="d-none d-md-inline">|</span>
+                    <li class="nav-item"> 
+                    <form action="{% url 'notifications:activity' %}" 
+                    method="post" class="position-relative">
+                        {% csrf_token %}
+                        <button type="submit" class="logout-button nav-item">Actividad</button>
+                        {% if unread_notifications_counter > 0 %}
+                        <span class="position-absolute top-0 start-100 translate-middle 
+                        badge rounded-pill bg-primary">
+                        {{ unread_notifications_display }}
+                            <span class="visually-hidden">Nuevas notificaciones</span>
+                        </span>
+                        {% endif %}
+                    </form>
+                    </li>
                     <span class="d-none d-md-inline">|</span>
                     <form action="{% url 'accounts:logout' %}" method="post">
                         {% csrf_token %}

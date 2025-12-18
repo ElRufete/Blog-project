@@ -1,6 +1,6 @@
 body{
     background-color: black;
-    color: beige
+    color: beige;
 }
 
 .navbar-style {
@@ -55,6 +55,12 @@ a:hover{
     padding: 0 1.5rem;
 }
 
+.adjusted{
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .blackboard .list-group-item{
     background-color: transparent !important;
     color: beige;
@@ -90,9 +96,13 @@ a:hover{
 }
 
 .message-link{
-    font-size: 1.2rem;
+    font-size: 1rem;
     align-items: center;
-    display: inline-flex;
+    display: inline;
+}
+
+.message-link a{
+    font-size: 1rem;
 }
 .blog-entry{
     text-align: left;
@@ -252,4 +262,93 @@ a:hover{
 .response-block{
     margin-left: 1.5rem;
     padding-left: 0.5rem
+}
+
+.greeting {
+    font-size: 1.2rem;
+}
+.greeting a{
+    font-size: 1.2rem;
+}
+.friends-list{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.friends-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.friends-row a{
+    font-size: 1.2rem;
+}
+
+.friends-row-buttons{
+    display: flex;
+    flex-direction: row;
+}
+
+.friends-row-button {
+	box-shadow:inset 0px 1px 0px 0px #97c4fe;
+	background:linear-gradient(to bottom, #3d94f6 5%, #1e62d0 100%);
+	background-color:#3d94f6;
+	border-radius:6px;
+	border:1px solid #337fed;
+	display:inline-flex;
+	cursor:pointer;
+	color:beige;
+	font-family:'Comic Sans MS', 'Comic Sans', 'Chalkboard SE';
+	font-size:15px;
+	font-weight:bold;
+	padding:0.2rem 0.5rem;
+    margin: 0 0.3rem 0 0.3rem;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #1570cd;
+}
+.friends-row-button:hover {
+	background:linear-gradient(to bottom, #1e62d0 5%, #3d94f6 100%);
+	background-color:#1e62d0;
+}
+.friends-row-button:active {
+	position:relative;
+	top:1px;
+}
+
+.accordion-header,
+.accordion-item,
+.accordion-button,
+.accordion-button:not(.collapsed) {
+    background-color: transparent;
+    border: none;
+    box-shadow: none !important;
+    width: auto !important;
+    display: inline-flex !important;
+    color: beige
+}
+
+.accordion-button p{
+    margin-right: 1rem;
+    text-decoration: underline;
+}
+
+.accordion-button{
+    height: auto;
+}
+.accordion-button::after {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23f5f5dc' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+}
+
+.column-right{
+    display:flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+#collapseOptions .card{
+    width: fit-content;
+    margin-left: auto;
+    align-items: start;
+    background-color: rgba(2, 7, 0, 0.158);
 }

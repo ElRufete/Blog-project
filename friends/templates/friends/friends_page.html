@@ -1,0 +1,94 @@
+{% extends 'blog/layout.html' %}
+
+{% block page_header %}
+
+
+{% endblock page_header %}
+
+{% block content %}
+
+{% if messages %}
+
+    <div>
+        {% for message in messages %}
+            {% if 'friends' in message.tags %}
+                <div class="alert alert-{{ message.level_tag }}">
+                    {{message}}
+                </div>
+            {% endif %}                    
+        {% endfor %}
+    </div>
+{% endif %}
+
+<div class="p-2 mb-1 blackboard adjusted centered">
+    <div class="centered pb-1">
+        <h3>  Amigos </h3>
+    </div>
+</div>
+<div class="p-3 mb-1 blackboard">
+    <form class="d-flex adjusted" action="{% url 'friends:search_friends' %}" method=POST>
+        {% csrf_token %} 
+
+        <input class="form-control me-2" type="search" placeholder="Buscar usuarios" 
+        aria-labels="Buscar usuario" name="searched">
+        <button class="friends-row-button" type="submit">Buscar</button>
+    </form>
+    <div class="centered pb-3 mt-3">
+        <h4>Lista de amigos</h4>
+    </div>
+    {% for friend in user_friends %}
+    <div class="friends-list pb-2 pt-2">
+        <div class="friends-row border-bottom pb-2">
+            <div>
+                <a href="{% url 'accounts:user_profile' friend.id %}">{{friend.user_name}}</a>
+            </div>
+            <div>
+                <form action="{% url 'friends:end_friendship' friend.id %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <button class= "friends-row-button ms-auto" 
+                    type="submit">Eliminar amigo</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+        <p>Aún no tienes amigos</p>
+    {% endfor %}
+</div>
+<div class="p-3 mb-1 blackboard">
+    <div class="centered pb-3">
+        <h4>Solicitudes de amistad</h4>
+    </div>
+    {% for fr_request in user_requests %}
+        <div class="friends-list pb-2 pt-2">
+            <div class="friends-row border-bottom pb-2">
+                <div>
+                    <p>{{fr_request.sender}} te ha enviado una solicitud de amistad
+                </div>
+                <div class="friends-row-buttons">
+                    <form action="{% url 'friends:accept_request' fr_request.id %}"
+                     method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <button class= "friends-row-button ms-auto" 
+                            type="submit">Aceptar</button>
+                    </form>
+                    <form action="{% url 'friends:decline_request' fr_request.id %}" 
+                    method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <button class= "friends-row-button ms-auto" 
+                            type="submit">Rechazar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+            
+        
+    {% empty %}
+    <p>No tienes solicitudes de amistad pendientes</p>
+    {% endfor %}
+</div>
+
+{% endblock content %}

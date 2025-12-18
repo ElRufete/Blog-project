@@ -1,41 +1,115 @@
 {% extends "blog/layout.html" %}
+{% load django_bootstrap5 %}
+{% load timeago %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
 
 <title>Home</title>
 {% block content%}
-<div class="blackboard">
-    <p class="me-auto p-2 blog-options">
-        <a href="{% url 'blog:blogs_list' %}">&laquo; Atrás </a>
-    </p>
-    <div class="centered border-bottom pb-3">
-        <h2>  {{ blog.text }} </h2>
-        <p class="message-link c">Creado por {{ blog.author }} el {{ blog.date_added }}</p>
-    </div>
-    {% if blog.author == request.user %}
-        <div class="blog-options pb-3 pt-3 border-bottom">
-            <div class="push-up me-auto">
-                    <a href="{% url 'blog:new_entry' blog.id %}"> Nueva Entrada </a>
+    <div class="blackboard">
+        <div class="friends-row">
+            <div>
+                <p class="me-auto p-2 blog-options">
+                    <a href="{% url 'blog:blogs_list' %}">&laquo; Atrás </a>
+                </p>
             </div>
-            <div class=" push-up ms-auto">
-                    <form action="{% url 'blog:delete_blog' blog.id %}" method="POST">
-                            {% csrf_token %}
-                            <button type="submit" class="logout-button">🗑️ Eliminar</button>
-                    </form>
-                </div>
+            {% if blog.author == request.user or request.user in blog_collabs %}
+                <div class="column-right">
+                    <button class="btn btn-primary mt-3 mb-3" type="button" data-bs-toggle="collapse" 
+                    data-bs-target="#collapseOptions" aria-expanded="false" 
+                    aria-controls="collapseExample">
+                        <strong>...</strong>
+                    </button>
+                </div> 
+            {% endif %}
         </div>
-    {% endif %} 
 
+        <div class="collapse" id="collapseOptions">
+            <div class="card card-body ms-auto">
+                {% if blog.author == request.user or request.user in blog_collabs %}
+                    <div class="pb-2">
+                        <div>
+                            <a href="{% url 'blog:new_entry' blog.id %}"> Nueva Entrada </a>
+                        </div>
+                    </div>
+                {% endif %} 
+
+                {% if blog.author == request.user %}
+                    <div class="pb-2">
+                        <a href="{% url 'collaborators:add_collab_page' blog.id %}"> 
+                            Añadir colaborador </a>
+                    </div>
+                    
+                    <div class="pb-2">
+                        <a href="{% url 'collaborators:remove_collab_page' blog.id %}"> 
+                            Eliminar colaborador </a>
+                    </div>
+
+                    <div class="pb-2 ">
+                        <form action="{% url 'blog:delete_blog' blog.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="logout-button push-up">🗑️ Eliminar</button>
+                        </form>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    <div class="border-bottom pb-3">
+        <div class="centered">
+            <h2>  {{ blog.text }} </h2>
+            <p class="message-link">
+                Creado por<a href="{% url 'accounts:user_profile' blog.author.id %}">
+                    {{ blog.author }}</a>{{ blog.date_added | custom_time_since}}</p>
+            {% if blog.author == request.user or request.user in blog_collabs %}
+                <div class="blog-options pb-3 pt-3">
+                    <div>
+                        <a href="{% url 'blog:new_entry' blog.id %}"> Nueva Entrada </a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="friends-button" id="accordionFlush">
+            <div class="accordion-item no-bg">
+                <h2 class="accordion-header no-bg" id="flush-headingOne">
+                    <button class="accordion-button collapsed no-bg" type="button" 
+                    data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" 
+                    aria-expanded="false" aria-controls="flush-collapseOne">
+                        <p>{{collabs_phrase}}</p>
+                    </button>
+                </h2>
+            </div>
+            <div id="flush-collapseOne" class="accordion-collapse collapse no-bg"
+            aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlush">
+                <div class="accordion-body no-bg">
+                    {% for collab in blog_collabs %}
+                        <p>
+                            <a href="{% url 'accounts:user_profile' collab.id %}">
+                                {{collab.user_name}}</a>
+                        </p>
+                    {% empty %}
+                        <p>Este blog no tiene colaboradores aún</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <h3 class="centered">Entradas</h3>
     <ul class="list-group pb-3 mb-4 border-bottom">
         {% for entry in entries %}
             <li class="list-group-item">
-              <a href="{% url 'blog:entry' blog.id entry.id %}">{{entry.title}}</a>  
+              <a href="{% url 'blog:entry' blog.id entry.id %}">{{entry.title}}</a> 
+              <span>({{entry.author}}, {{entry.date_added | custom_time_since}})</span> 
             </li>
         {%empty%}
-            <li>Aún no hay entradas para este tema. ¡Estrénalo!</li>
-        {% endfor %}
-            
+            {% if request.user == blog.author %}
+                <li>Aún no hay entradas para este tema. 
+                <a href="{% url 'blog:new_entry' blog.id %}"> ¡Estrénalo! </a></li>
+            {% else %}
+                <li>Aún no hay entradas para este tema.</li>
+            {% endif %}
+        {% endfor %}   
     </ul>
-    
-
-    
 </div>
 {%endblock content%}

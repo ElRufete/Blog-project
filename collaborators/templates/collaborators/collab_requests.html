@@ -1,0 +1,84 @@
+{% extends 'blog/layout.html' %}
+
+{% block page_header %}
+
+
+{% endblock page_header %}
+
+{% block content %}
+
+{% if messages %}
+    <div>
+        {% for message in messages %}
+            {% if 'collabs' in message.tags %}
+                <div class="alert alert-{{ message.level_tag }}">
+                    {{message}}
+                </div>
+            {% endif %}                    
+        {% endfor %}
+    </div>
+{% endif %}
+
+<div class="p-2 mb-1 blackboard adjusted centered">
+    <div class="centered pb-1">
+        <h3>  Solicitudes de colaboración </h3>
+    </div>
+</div>
+
+<div class="p-3 mb-1 blackboard  pb-3">
+    <div class="centered pb-3">
+        <h5>Recibidas</h5>
+    </div>
+    {% for collab_request in user_collab_requests %}
+        <div class="friends-list pb-2 pt-2">
+            <div class="friends-row border-bottom pb-2">
+                <div>
+                    <p>¡{{collab_request.sender}} quiere que colabores en su blog "{{collab_request.blog}}"!</p>
+                </div>
+                <div class="friends-row-buttons">
+                    <form action="{% url 'collaborators:accept_collab_request' collab_request.id  %}"
+                     method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <button class= "friends-row-button ms-auto" 
+                            type="submit">Aceptar</button>
+                    </form>
+                    <form action="{% url 'collaborators:decline_collab_request' collab_request.id %}" 
+                    method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <button class= "friends-row-button ms-auto" 
+                            type="submit">Rechazar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p>No tienes solicitudes de colaboración pendientes</p>
+    {% endfor %}
+    <div class="centered pb-3">
+        <h5>Enviadas</h5>
+    </div>
+    {% for collab_request in sent_collab_requests %}
+        <div class="friends-list pb-2 pt-2">
+            <div class="friends-row border-bottom pb-2">
+                <div>
+                    <p>Has invitado a {{collab_request.receiver}} a colaborar en "{{collab_request.blog}}"</p>
+                </div>
+                <div class="friends-row-buttons">
+                    <form action="{% url 'collaborators:cancel_collab_request' collab_request.id %}" 
+                    method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <button class= "friends-row-button ms-auto" 
+                            type="submit">Cancelar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p>No tienes solicitudes de colaboración pendientes</p>
+    {% endfor %}
+</div>
+
+{% endblock content %}

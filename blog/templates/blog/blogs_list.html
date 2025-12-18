@@ -4,37 +4,84 @@
 
 {% block content%}
     <div class="blackboard">
-        <div class="border-bottom text-center pb-3">
-            <h3> Tus Blogs </h3>
-            <a href="{% url 'blog:new_blog' %}"> Crear Blog </a>
-        </div>
+         <div class="text-center pb-3">
+                <h3> Tus Blogs </h3>
+                <a href="{% url 'blog:new_blog' %}"> Crear Blog </a>
+            </div>
+        {% if user_blogs %}
+            <ul class="list-group pb-2 pt-4 mb-4 bg-none">
+                {% if request.user.is_authenticated %}
+                    {%for blog in user_blogs%}
+                        <li class="list-group-item border-none                                                                                                                                                              ">
+                            <a href="{% url 'blog:entries_list' blog.id %}">{{ blog.text }}</a>
+                        </li>
+
+                    {%empty%}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+                        <p>Aún no has creado ningún blog </p>
+                    
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        {% endif %}
+        
+        {% if collaborating_blogs %}
+            <h3 class="centered">Blogs en los que colaboras</h3>
+            <ul class="list-group pb-2 pt-4 mb-4 bg-none">
+                {% if request.user.is_authenticated %}
+                    {%for blog in collaborating_blogs%}
+                        <li class="list-group-item border-none                                                                                                                                                              ">
+                            <a href="{% url 'blog:entries_list' blog.id %}">{{ blog.text }}</a>
+                        </li>
+
+                    {%empty%}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+                        <p> No estás colaborando en ningún blog </p>
+                    
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        {% endif %}
+
+        {% if friends_blogs %}
+            <h3 class="centered">Blogs de tus amigos</h3>
+            <ul class="list-group pb-2 pt-4 mb-4 bg-none">
+                {% if request.user.is_authenticated %}
+                    {%for blog in friends_blogs%}
+                        <li class="list-group-item border-none                                                                                                                                                              ">
+                            <a href="{% url 'blog:entries_list' blog.id %}">{{ blog.text }}</a>
+                        </li>
+
+                    {%empty%}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+                        <p> No estás colaborando en ningún blog </p>
+                    
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        {% endif %}
+        
+
+        </ul>
+        <h3 class="text-center pb-3"> Blogs de la comunidad </h3>
 
         <ul class="list-group pb-2 pt-4 mb-4 bg-none">
-            {%for blog in blogs%}
-                {% if blog.author == request.user %}
-                    <li class="list-group-item border-none                                                                                                                                                              ">
+            {% if request.user.is_authenticated %}
+                {%for blog in other_blogs%}
+                    <li class="list-group-item">
                         <a href="{% url 'blog:entries_list' blog.id %}">{{ blog.text }}</a>
                     </li>
-            {% endif %}                                                                                                                                 
-
-            {%empty%}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
-                <p>Aún no has creado ningún blog </p>
             
-            {% endfor %}
+                {%empty%}
+                    <p>Aún no se ha creado ningún blog </p>
+                {% endfor %}
+            {% else %}
+                {%for blog in blogs%}
+                    <li class="list-group-item">
+                        <a href="{% url 'blog:entries_list' blog.id %}">{{ blog.text }}</a>
+                    </li>
             
-        </ul>
-        <h3 class="border-bottom text-center pb-3"> Blogs de la comunidad </h3>
-
-        <ul class="list-group pb-2 pt-4 mb-4 bg-none">
-            {%for blog in blogs%}
-            {% if blog.author != request.user %}
-                <li class="list-group-item">
-                    <a href="{% url 'blog:entries_list' blog.id %}">{{ blog.text }}</a>
-                </li>
+                {%empty%}
+                    <p>Aún no se ha creado ningún blog </p>
+                {% endfor %}
             {% endif %}
-            {%empty%}
-                <p>Aún no se ha creado ningún blog </p>
-            {% endfor %}
         </ul>
 
 

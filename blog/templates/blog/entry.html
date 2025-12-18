@@ -1,93 +1,163 @@
 {% extends "blog/layout.html" %}
 {% load django_bootstrap5%}
+{% load timeago %}
 
 <title>Home</title>
 {% block content%}
 <div class=blackboard>
-    <div class="me-auto">
-            <a href="{% url 'blog:entries_list' blog.id %}">&laquo; Atrás </a>
+    <div class="friends-row">
+        <div>
+            <p class="me-auto p-2 blog-options">
+                <a href="{% url 'blog:blogs_list' %}">&laquo; Atrás </a>
+            </p>
+        </div>
+        
+        {% if blog.author == request.user or entry.author == request.user %}
+            <div class="column-right">
+                <button class="btn btn-primary mt-3 mb-3" type="button" data-bs-toggle="collapse" 
+                data-bs-target="#collapseOptions" aria-expanded="false" 
+                aria-controls="collapseOptions">
+                    <strong>...</strong>
+                </button>
+            </div> 
+        {% endif %}
     </div>
+
+    <div class="collapse" id="collapseOptions">
+        <div class="card card-body ms-auto">
+            {% if entry.author == request.user %}
+                <div class="pb-2">
+                    <div>
+                        <a href="{% url 'blog:edit_entry' entry.id %}"> Editar </a>
+                    </div>
+                </div>
+            {% endif %} 
+
+            {% if blog.author == request.user or entry.author == request.user %}
+                <div class="pb-2">
+                    <form action="{% url 'blog:delete_entry' entry.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="logout-button">🗑️ Eliminar</button>
+                    </form>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
     <div class="pb-3 border-bottom centered">
         <h2>{{ entry.title }}</h2>
-        <p>Añadida el {{ entry.date_added }} por {{ blog.author }}</p>
+        <p class="message-link">Publicado {{ entry.date_added | custom_time_since }} 
+            por<a href="{% url 'accounts:user_profile' entry.author.id %}">{{ entry.author }}</a> </p>
     </div>
-    {% if blog.author == request.user %}
-        <div class="blog-options pb-3 pt-3 border-bottom">
-            <div class="me-auto">
-                <a href="{% url 'blog:edit_entry' entry.id %}"> Editar </a>
-            </div>
-            <div class="ms-auto">
-                <form action="{% url 'blog:delete_entry' entry.id %}" method="POST">
-                        {% csrf_token %}
-                        <button type="submit" class="logout-button">🗑️ Eliminar</button>
-                </form>
-            </div>
-        </div>
-        {% endif %}
     
-    <div class="pt-4 pb-3 stretch-line">
+    <div class="pt-4 pb-3 stretch-line border-bottom">
         <p>{{ entry.text| linebreaksbr}}</p>
     </div>
-    <div class= "blog-options p-2 pt-4 border-bottom" style="--bs-border-opacity: .5;"> 
-        
-        <div class="ms-auto">
-            <a href="{% url 'blog:comment_entry' entry.id %}"> Comentar </a>
+
+    <div class= "blog-options p-2 pt-4 border-bottom" style="--bs-border-opacity: .5;">
+        <div class="friends-button" id="accordionFlush">
+            <div class="accordion-item no-bg">
+                <h2 class="accordion-header no-bg" id="flush-headingOne">
+                    <button class="accordion-button collapsed no-bg" type="button" 
+                    data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" 
+                    aria-expanded="false" aria-controls="flush-collapseOne">
+                        <p>{{comments_len}} {{comments_word}}</p>
+                    </button>
+                </h2>
+            </div>
+        </div>
+
+        <div class="friends-button" id="accordionFlush">
+            <div class="accordion-item no-bg">
+                <h2 class="accordion-header no-bg" id="flush-headingCom">
+                    <button class="accordion-button collapsed no-bg" type="button" 
+                    data-bs-toggle="collapse" data-bs-target="#flush-collapseCom" 
+                    aria-expanded="false" aria-controls="flush-collapseCom">
+                        <p>Comentar</p>
+                    </button>
+                </h2>
+            </div>
         </div>
     </div>
-        {% if comments %}
-            {% for comment in comments %}
-                <div class="comment-bar pb-2">
-                    <div class="comment-bar me-auto">
-                        <p>{{comment.author}}, el {{comment.date_added}}:</p>
+
+    <div id="flush-collapseCom" class="accordion-collapse collapse no-bg ms-auto"
+        aria-labelledby="flush-headingCom" data-bs-parent="#accordionFlush">
+        <div class="accordion-body no-bg">
+            <div class="p-3 mb-1 blackboard adjusted">
+                <div class="centered">
+                    <form action="{% url 'blog:comment_entry' entry.id %}" method='post'>
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        {% bootstrap_button button_type="submit" content="Comentar" %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>    
+
+    <div class= "blog-options p-2 pt-4 border-bottom" style="--bs-border-opacity: .5;">
+        <div id="flush-collapseOne" class="accordion-collapse collapse no-bg"
+        aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlush">
+            <div class="accordion-body no-bg">
+                {% for comment in comments %}
+                    <div class="border-start">
+                        <div class="comment-bar ms-2">
+                            <div class="comment-bar me-auto">
+                                <p>{{comment.author}}, {{comment.date_added | custom_time_since}}:</p>
+                            </div>
+                        </div>
+        
+                        <div class="comment-text pb-1 ms-2">
+                            <p>{{comment.text | linebreaks}}</p>
+                        </div>
                     </div>
-                </div>
-                <div class="comment-text pb-1">
-                    <p>{{comment.text | linebreaks}}</p>
-                </div>
-                <div class="comment-bar border-bottom pb-2">
-                    <div style="--bs-border-opacity: .5;">
+
+                    <div class="blog-options comment-bar border-bottom pb-2">
+                        <div style="--bs-border-opacity: .5;">
                             <a href="{% url 'blog:comment_response' comment.id %}"> 
                                 Responder </a>
-                    </div>
-                    {% if comment.author == request.user %}
+                        </div>
+
                         <div style="--bs-border-opacity: .5;">
-                            <form action="{% url 'blog:delete_comment' comment.id %}" 
-                            method="POST">
-                                {% csrf_token %}
-                                <button type="submit" class="logout-button">Borrar</button>
-                            </form>
-                        </div>
-                    {% endif %}
-                </div>
-            <div>
-            <div class="border-bottom">
-                {% for response in comment.commentresponse_set.all %}
-                
-                    <div class="response-block border-start border-bottom">
-                        <div class="comment-bar pb-1">
-                            <div class="comment-bar ms-8">
-                                <p>{{response.author}} respondió:</p>
-                            </div>
-                        </div>
-                        <div class="comment-text pb-2" 
-                        style="--bs-border-opacity: .5;">
-                            <p>{{response.text | linebreaks}}</p>
-                        </div>
-                        {% if response.author == request.user %}
-                        
-                            <div class="ms-auto blog-options">
-                                <form action="{% url 'blog:delete_response' response.id %}" 
+                            {% if comment.author == request.user %}
+                                <form action="{% url 'blog:delete_comment' comment.id %}" 
                                 method="POST">
                                     {% csrf_token %}
-                                    <button type="submit" class="logout-button">Borrar Respuesta</button>
+                                    <button type="submit" class="logout-button">Borrar</button>
                                 </form>
-                            </div>
+                            {% endif %}
                         </div>
-                        {% endif %}
                     </div>
+                
+                    {% for response in comment.commentresponse_set.all %}
+                        <div class="response-block border-start border-bottom">
+                            <div class="comment-bar pb-1">
+                                <div class="comment-bar ms-8">
+                                    <p>{{response.author}} respondió:</p>
+                                </div>
+                            </div>
+
+                            <div class="comment-text pb-2" 
+                            style="--bs-border-opacity: .5;">
+                                <p>{{response.text | linebreaks}}</p>
+                            </div>
+
+                            {% if response.author == request.user %}
+                                <div class="ms-auto blog-options">
+                                    <form action="{% url 'blog:delete_response' response.id %}" 
+                                    method="POST">
+                                        {% csrf_token %}
+                                        <button type="submit" class="logout-button">Borrar Respuesta</button>
+                                    </form>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                {% empty %}
+                    <p>No hay comentarios aún</p>
                 {% endfor %}
-            {% endfor %}
-        {% endif %}  
-        
-</div>    
+            </div>
+        </div>  
+    </div>
+</div>
 {%endblock content%}

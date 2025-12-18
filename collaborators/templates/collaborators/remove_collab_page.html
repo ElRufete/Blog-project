@@ -1,0 +1,57 @@
+{% extends 'blog/layout.html' %}
+
+{% block page_header %}
+
+
+{% endblock page_header %}
+
+{% block content %}
+
+{% if messages %}
+    <div>
+        {% for message in messages %}
+            {% if 'collabs' in message.tags %}
+                <div class="alert alert-{{ message.level_tag }}">
+                    {{message}}
+                </div>
+            {% endif %}                    
+        {% endfor %}
+    </div>
+{% endif %}
+
+<div class="p-2 mb-1 blackboard adjusted centered">
+    <div class="centered pb-1">
+        <h3>  Eliminar colaborador </h3>
+    </div>
+</div>
+
+<div class="p-3 mb-1 blackboard">
+    <p class="me-auto p-2 blog-options">
+        <a href="{% url 'blog:entries_list' blog.id %}">&laquo; Atrás </a>
+    </p>
+    <div class="centered pb-3">
+        <h4>Elige al colaborador al que quieres eliminar</h4>
+    </div>
+    {% for collab in collabs %}
+        <div class="friends-list pb-2 pt-2">
+            <div class="friends-row border-bottom pb-2">
+                <div>
+                    <p>{{collab}}</p>
+                </div>
+                <div class="friends-row-buttons">
+                    <form action="{% url 'collaborators:remove_collab' blog.id collab.id %}"
+                     method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <button class= "friends-row-button ms-auto" 
+                            type="submit">Eliminar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+    <p>Este blog no tiene colaboradores que eliminar</p>
+    {% endfor %}
+</div>
+
+{% endblock content %}

@@ -1,0 +1,30 @@
+{% extends "blog/layout.html" %}
+{% load django_bootstrap5 %}
+
+    <title>Editar perfil</title>
+
+{% block page_header %}
+
+<div class="p-3 mb-1 blackboard centered text-center">
+        <h1> Editar perfil </h1>
+</div>
+{% endblock page_header %}
+
+
+{% block content%}
+
+    <div class="p-3 mb-1 blackboard">
+        <div class="centered">
+            <form action=
+            "{% url 'accounts:edit_profile' request.user.id %}"
+             method='post' enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    <div class="centered">
+                    {% bootstrap_button button_type="submit" class="friends-row-button" content="Guardar cambios" %}
+                    </div>
+            </form>
+        </div>
+    </div>
+
+{%endblock content%}

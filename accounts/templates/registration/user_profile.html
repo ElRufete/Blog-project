@@ -1,0 +1,89 @@
+{% extends 'blog/layout.html' %}
+
+{% block page_header %}
+
+
+{% endblock page_header %}
+
+{% block content %}
+
+{%  if messages %}
+        <div>
+            {% for message in messages %}
+                {% if 'friends' in message.tags %}
+                    <div class="alert alert-{{ message.level_tag }}">
+                        {{message}}
+                    </div>
+                {% endif %}    
+            {% endfor %}
+        </div>
+    {% endif %}
+
+<div class="p-3 mb-4 blackboard">
+    {% if request.user.is_authenticated %}
+        {% if profile_user == request.user %}
+            <div class="ms-auto">
+                <a href="{% url 'accounts:edit_profile' request.user.id %}">Editar Perfil</a>
+            </div>
+        {% endif %}
+    {% endif %}
+        
+    <div class="centered">
+        <div class="p-1 mb-1">
+            <h2 class="text-center">{{profile_user.user_name}}</h2>
+        </div>
+        <div class="p-1 mb-1">
+            <p class="text-center">{{profile_user.first_name}} {{profile_user.last_name}}<p>
+        </div>
+        <div class="p-1 mb-1">
+            <p class="text-center">{{profile_user.about}}<p>
+        </div>
+    </div>
+    
+<div class="p-3 mb-4 blackboard">
+    <div>
+        <h4 class="centered">Blogs</h4>
+    </div>
+
+    {% for blog in profile_user_blogs %}
+        <ul>
+            <a href="{% url 'blog:entries_list' blog.id %}">{{blog}}</a>
+        </ul>
+    {% empty %}
+        {% if profile_user == request.user %}
+            <ul>Aún no has publicado ningún blog</ul>
+        {% else %}
+            <ul>Este usuario aún no ha publicado ningún blog</ul>
+        {% endif %}
+    {% endfor %}
+        
+</div>
+
+{% if request.user.is_authenticated %}
+        {% if request.user != profile_user %}
+        <div class="p-3 mb-4 blackboard">
+            <div>
+                <h4 class="centered">Amigos en común</h4>
+            </div>
+            {% for friend in mutuals %}
+
+                <ul> <a href="{% url 'accounts:user_profile' friend.id %}">{{friend}}</a> </ul>
+
+            {% empty %}
+
+            <ul>Aún no tenéis amigos en común:</ul>
+
+            {% endfor %}
+            <div class="centered">
+                <form action=
+                "{% url 'friends:new_friend_request' profile_user.id %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <button type="submit" class="friends-row-button">Solicitar amistad</button>
+                </form>
+            </div>
+
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock content %}

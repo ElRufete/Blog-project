@@ -1,0 +1,49 @@
+{% extends 'blog/layout.html' %}
+
+{% block page_header %}
+
+
+{% endblock page_header %}
+
+{% block content %}
+{% if messages %}
+
+    <div>
+        {% for message in messages %}
+            {% if 'friends' in message.tags %}
+                <div class="alert alert-{{ message.level_tag }}">
+                    {{message}}
+                </div>
+            {% endif %}                    
+        {% endfor %}
+    </div>
+{% endif %}
+
+<h2 class = "blackboard adjusted centered mb-2">Resultados de la búsqueda</h2>
+<div class= "blackboard">
+    {% if searched %}
+        {% for searched_user in users %}
+        <div class="friends-list pb-2 pt-2">
+            <div class="friends-row border-bottom pb-2">
+                <div>
+                    <a href="{% url 'accounts:user_profile' searched_user.id %}">{{searched_user.user_name}}</a>
+                </div>
+                <div>
+                    <form action="{% url 'friends:new_friend_request' searched_user.id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <input type="hidden" name="searched" value="{{ searched }}">
+                        <button class= "friends-row-button ms-auto" 
+                        type="submit">Solicitar amistad</button>
+                    </form>
+                </div>
+            </div>
+        {% empty %}
+            <h3 class="centered mt-2 mb-2">No hay resultados para la búsqueda.</h3>
+        {% endfor %}
+    {% else %}
+            <h3 class="centered mt-2 mb-2">¡Ups! Parece que no has introducido ninguna búsqueda.</h3>
+    {% endif %}
+</div>
+
+{% endblock content %}

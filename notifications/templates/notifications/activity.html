@@ -1,0 +1,144 @@
+{% extends 'blog/layout.html' %}
+
+{% block page_header %}
+
+
+{% endblock page_header %}
+
+{% block content %}
+
+{% if messages %}
+    <div>
+        {% for message in messages %}
+            {% if 'collabs' in message.tags %}
+                <div class="alert alert-{{ message.level_tag }}">
+                    {{message}}
+                </div>
+            {% endif %}                    
+        {% endfor %}
+    </div>
+    <div>
+        {% for message in messages %}
+            {% if 'friends' in message.tags %}
+                <div class="alert alert-{{ message.level_tag }}">
+                    {{message}}
+                </div>
+            {% endif %}                    
+        {% endfor %}
+    </div>
+{% endif %}
+
+<div class="p-2 mb-1 blackboard adjusted centered">
+    <div class="centered pb-1">
+        <h3>  Actividad </h3>
+    </div>
+</div>
+    
+{% for notification in notifications %}
+    {% if notification.notification_type == 'entry' %}
+        <div class="p-3 mb-1 blackboard  pb-3">
+            <div>
+                <p>
+                    ¡{{notification.newentrynotification.creator.author}} 
+                    ha publicado una nueva entrada en su blog:
+                    "{{notification.newentrynotification.creator.blog}}"!
+                </p>
+            </div>
+        </div>          
+    {% elif notification.notification_type == 'blog' %}
+        <div class="p-3 mb-1 blackboard  pb-3">
+            <div>
+                <p>
+                    ¡{{notification.newblognotification.creator.author}} 
+                    ha creado un nuevo blog titulado:
+                    "{{notification.newblognotification.creator}}"!
+                </p>
+            </div>
+        </div>          
+    {% elif notification.notification_type == 'comment' %}
+        <div class="p-3 mb-1 blackboard  pb-3">
+            <div>
+                <p>
+                    ¡{{notification.commentnotification.creator.author}} 
+                    Ha comentado:
+                    "{{notification.commentnotification.creator.text}}"!
+                </p>
+            </div>
+        </div>          
+    {% elif notification.notification_type == 'response' %}
+        <div class="p-3 mb-1 blackboard  pb-3">
+            <div>
+                <p>
+                    {{notification.responsenotification.creator.author}} 
+                    ha respondido a tu comentario:
+                    {{notification.responsenotification.creator.text}}
+                </p>
+            </div>
+        </div>          
+    {% elif notification.notification_type == 'friend request' %}
+        <div class="p-3 mb-1 blackboard  pb-3">
+            <div class="friends-row pb-2">
+                <div>
+                    <p>
+                        {{notification.friendrequestnotification.creator.sender}} 
+                        Te ha enviado una solicitud de amistad
+                    </p>
+                </div>
+                {% if notification.friendrequestnotification.creator.is_active == True  %}
+                <div class="friends-row-buttons">
+                    <form action="{% url 'friends:accept_request' notification.friendrequestnotification.creator.id %}"
+                    method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <button class= "friends-row-button ms-auto" 
+                            type="submit">Aceptar</button>
+                    </form>
+                    <form action="{% url 'friends:decline_request' notification.friendrequestnotification.creator.id %}" 
+                    method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <button class= "friends-row-button ms-auto" 
+                            type="submit">Rechazar</button>
+                    </form>
+                </div>
+                {% endif %}
+            </div>  
+        </div>    
+
+    {% elif notification.notification_type == 'collab request' %}
+        <div class="p-3 mb-1 blackboard  pb-3">
+            <div class="friends-row pb-2">
+                <div>
+                    <p>
+                        {{notification.collabrequestnotification.creator.sender}} 
+                        Quiere que colabores en su blog:
+                        "{{notification.collabrequestnotification.creator.blog}} "
+                    </p>
+                </div>
+                {% if notification.collabrequestnotification.creator.is_active == True  %}
+                    <div class="friends-row-buttons">
+                        <form action="{% url 'collaborators:accept_collab_request' notification.collabrequestnotification.creator.id %}"
+                        method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="next" value="{{ request.path }}">
+                                <button class= "friends-row-button ms-auto" 
+                                type="submit">Aceptar</button>
+                        </form>
+                        <form action="{% url 'collaborators:decline_collab_request' notification.collabrequestnotification.creator.id %}" 
+                        method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="next" value="{{ request.path }}">
+                                <button class= "friends-row-button ms-auto" 
+                                type="submit">Rechazar</button>
+                        </form>
+                    </div>
+                {% endif %}
+            </div>
+        </div>  
+    {% endif %}      
+{% empty %}
+    <div class="p-3 mb-1 blackboard  pb-3">
+        <p>No tienes notificaciones de actividad por el momento</p>
+    </div>
+{% endfor %}
+{% endblock content %}

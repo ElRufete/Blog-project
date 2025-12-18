@@ -34,6 +34,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'clave-de-desarrollo')
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 
+
 # Render agregará automáticamente tu dominio, pero puedes añadir otros si quieres
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
@@ -61,6 +62,13 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Apps
 INSTALLED_APPS = [
+
+     # my apps
+    'blog',
+    'accounts',
+    'friends',
+    'collaborators',
+    'notifications',
    
     # Django apps
     'django.contrib.admin',
@@ -70,15 +78,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-     # Terceros
+     # Third party apps
     'django_bootstrap5',
     'cloudinary_storage',
-    'cloudinary',
-
-     # Tus apps
-    'blog',
-    'accounts',
-    
+    'cloudinary', 
 ]
 
 MIDDLEWARE = [
@@ -109,6 +112,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'notifications.context_processors.unread_notifications_counter',
             ],
         },
     },
@@ -144,6 +148,8 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
+# Custom User model
+AUTH_USER_MODEL = 'accounts.NewUser' 
 
 # Configuración regional
 LANGUAGE_CODE = 'es'
@@ -157,7 +163,8 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+if not DEBUG:
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 
