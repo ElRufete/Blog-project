@@ -1,10 +1,12 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from cloudinary import CloudinaryImage
 
 User = get_user_model()
 
 class Blog(models.Model):
     text = models.CharField(max_length=140)
+    about = models.CharField(max_length = 200, blank=True,)
     date_added = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -25,10 +27,8 @@ class Entry(models.Model):
     text = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, on_delete=(models.CASCADE), related_name="collab_entries")
-    banner = models.ImageField(upload_to='banners/',
-                                blank=True, 
-                                null=True, 
-                                )
+    banner = models.ImageField(upload_to= 'banners', blank=True, null=True)
+                                
 
     def __str__(self):
         return self.title

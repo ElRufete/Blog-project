@@ -53,6 +53,13 @@
     <div class="pt-4 pb-3 stretch-line border-bottom">
         <p>{{ entry.text| linebreaksbr}}</p>
     </div>
+    <div class="pt-4 pb-3">
+        {% if entry.banner %}
+            <img 
+            class = "img-fluid w-50 mx-3 rounded banner"
+            src = '{{ entry.banner.url }}'>
+        {% endif %}
+    </div> 
 
     <div class= "blog-options p-2 pt-4 border-bottom" style="--bs-border-opacity: .5;">
         <div class="friends-button" id="accordionFlush">

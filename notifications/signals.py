@@ -14,17 +14,19 @@ User = get_user_model()
 @receiver(post_save, sender=EntryComment)
 def create_comment_notification(sender, instance, created, **kwargs):
     if created:
-        CommentNotification.objects.create(creator=instance, 
-                                           target=instance.entry.author,
-                                           notification_type = NotificationType.COMMENT)
+        if instance.author != instance.entry.author:
+            CommentNotification.objects.create(creator=instance, 
+                                            target=instance.entry.author,
+                                            notification_type = NotificationType.COMMENT)
         
         
 @receiver(post_save, sender=CommentResponse)
 def create_response_notification(sender, instance, created, **kwargs):
     if created:
-        ResponseNotification.objects.create(creator=instance, 
-                                           target=instance.comment.author,
-                                           notification_type = NotificationType.RESPONSE)
+        if instance.author != instance.comment.author:
+            ResponseNotification.objects.create(creator=instance, 
+                                            target=instance.comment.author,
+                                            notification_type = NotificationType.RESPONSE)
         
         
 @receiver(post_save, sender=FriendRequest)
@@ -47,7 +49,7 @@ def sync_friend_request_notification(sender, instance, created, **kwargs):
 
 
 @receiver(post_save, sender=CollabRequest)
-def create_collab_request_notification(sender, instance, created, **kwargs):
+def sync_collab_request_notification(sender, instance, created, **kwargs):
     notification = getattr(instance, 'notification', None)
     if created:
         CollabRequestNotification.objects.create(creator=instance, 

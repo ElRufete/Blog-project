@@ -15,7 +15,7 @@
 
     <div class="p-3 mb-1 blackboard">
         <div class="centered">
-            <form action="{% url 'blog:new_entry' blog.id %}" method='POST'>
+            <form action="{% url 'blog:new_entry' blog.id %}" method='POST' enctype="multipart/form-data">
                     {% csrf_token %}
                     {% bootstrap_form form %}
                     {% bootstrap_button button_type="submit" content="Publicar" %}

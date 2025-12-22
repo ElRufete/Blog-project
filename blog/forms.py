@@ -6,15 +6,19 @@ from .models import Blog, Entry, EntryComment, CommentResponse
 class BlogForm(forms.ModelForm):
     class Meta:
         model = Blog
-        fields = ['text']
-        labels = {'text':''}
+        fields = ['text','about']
+        labels = {'text':'Título',
+                  'about': 'Descripción'}
+        widgets = {
+            'about': forms.Textarea(attrs={'cols':80, 'rows': 3}),
+            'text': forms.Textarea(attrs={'cols':50, 'rows': 1}),}
         
 
 class EntryForm(forms.ModelForm):
     class Meta:
         model = Entry
-        fields = ['title', 'text',]
-        labels = {'title': 'Título', 'text': '',}
+        fields = ['title', 'text', 'banner']
+        labels = {'title': 'Título', 'text': '','banner': 'Agrega una imagen (opcional)',}
         widgets = {'text': forms.Textarea(attrs={'cols':80, 'rows':16})}
 
 class EntryCommentForm(forms.ModelForm):

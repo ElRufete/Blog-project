@@ -10,6 +10,8 @@ from .forms import BlogForm, EntryForm, EntryCommentForm, CommentResponseForm
 User = get_user_model()
 
 def home(request):
+    from django.core.files.storage import default_storage
+    print(default_storage.__class__)
     return render(request, 'blog/home.html')
 
 
@@ -56,7 +58,7 @@ def entry(request,blog_id,entry_id):
     blog = Blog.objects.get(id=blog_id)
     entry = Entry.objects.get(id=entry_id)
     entries = Entry.objects.all()
-    entry_comments = entry.entrycomment_set.order_by('date_added')
+    entry_comments = entry.entrycomment_set.order_by('-date_added')
     comments = entry_comments.filter(entry=entry)
     comments_len = len(comments)
     comments_word = "Comentarios" if comments_len != 1 else "Comentario"

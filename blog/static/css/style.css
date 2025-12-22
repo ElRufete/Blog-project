@@ -1,13 +1,13 @@
 body{
     background-color: black;
-    color: beige;
+    color: blanchedalmond;
 }
 
 .navbar-style {
-    background-color: brown;
-    border: solid beige 1px;
+    background-color: rgba(53, 21, 21, 0.797);
+    border: solid blanchedalmond 1px;
     color: beige;
-    font-family:'Comic Sans MS', 'Comic Sans, Chalkboard SE';
+    font-family:'Arial', 'Comic Sans, Chalkboard SE';
 }
 
 nav a{
@@ -29,14 +29,14 @@ nav button, span{
 
 
 a{
-    color: beige;
+    color: blanchedalmond;
     display: inline;
     font-size: 1.2rem;
     margin-right: 0.5rem;
     margin-left: 0.5rem
 }
 a:visited{
-    color: beige;
+    color: blanchedalmond;
 }
 a:hover{
     color: lightseagreen;
@@ -46,9 +46,9 @@ a:hover{
 .blackboard{
     display: flex;
     flex-direction: column;
-    background-image: linear-gradient(to right,#0b3104, #072203) ;
-    font-family:'Comic Sans MS', 'Comic Sans', 'Chalkboard SE';
-    border: solid 0.5rem burlywood;
+    background-color: rgba(246, 250, 244, 0.097) ;
+    font-family:'Arial', 'Comic Sans', 'Chalkboard SE';
+    border: solid 0.1rem darkgray;
     border-radius: 0.5rem;
     max-height: fit-content;
     margin-top: 0.5rem;
@@ -63,7 +63,7 @@ a:hover{
 
 .blackboard .list-group-item{
     background-color: transparent !important;
-    color: beige;
+    color: blanchedalmond;
     border-color: transparent
 }
 
@@ -80,11 +80,11 @@ a:hover{
 }
 
 .title-list a{
-    color: beige
+    color: blanchedalmond
 }
 
 .title-list a:visited{
-    color: beige
+    color: blanchedalmond
 }
 
 .title-list a:hover{
@@ -118,10 +118,10 @@ a:hover{
 }
 
 .push-up a{
-    color: beige;
+    color: blanchedalmond;
 }
 .push-up a:visited{
-    color: beige;
+    color: blanchedalmond;
 }
 .push-up a:hover{
     color: lightseagreen;
@@ -129,8 +129,8 @@ a:hover{
 
 .logout-button {
     all: unset;                 
-    color: beige;               
-    font-family: 'Comic Sans MS', 'Comic Sans', 'Chalkboard SE';
+    color: blanchedalmond;               
+    font-family: 'Arial', 'Comic Sans', 'Chalkboard SE';
     font-size: 1.2rem;
     cursor: pointer;
     margin: 0 0.5rem;
@@ -152,7 +152,7 @@ a:hover{
 }
 
  .bg-dark .form-text {
-    color: beige !important;  
+    color: blanchedalmond !important;  
 }
 
 @media (max-width: 767.98px){
@@ -196,8 +196,8 @@ a:hover{
 
 .blog-options button{
     all: unset;                 
-    color: beige;               
-    font-family: 'Comic Sans MS', 'Comic Sans', 'Chalkboard SE';
+    color: blanchedalmond;               
+    font-family: 'Arial', 'Comic Sans', 'Chalkboard SE';
     font-size: 1rem;
     cursor: pointer;
     margin: 0 0.5rem;
@@ -210,7 +210,7 @@ a:hover{
 
 .blog-options button:visited{
     margin-top: 0.5rem;
-    color: beige;
+    color: blanchedalmond;
 }
 
 .stretch-line{
@@ -232,10 +232,10 @@ a:hover{
 
 .comment-bar a{
     font-size: 1rem;
-    color: beige;
+    color: blanchedalmond;
 }
 .comment-bar a:visited{
-    color: beige;
+    color: blanchedalmond;
 }
 .comment-bar a:hover{
     color: lightseagreen;
@@ -243,8 +243,8 @@ a:hover{
 
 .comment-bar button{
     all: unset;                 
-    color: beige;               
-    font-family: 'Comic Sans MS', 'Comic Sans', 'Chalkboard SE';
+    color: blanchedalmond;               
+    font-family: 'Arial', 'Comic Sans', 'Chalkboard SE';
     font-size: 1rem;
     cursor: pointer;
     margin: 0 0.5rem;
@@ -256,7 +256,7 @@ a:hover{
 }
 
 .comment-bar button:visited{
-    color: beige
+    color: blanchedalmond
 }
 
 .response-block{
@@ -298,8 +298,8 @@ a:hover{
 	border:1px solid #337fed;
 	display:inline-flex;
 	cursor:pointer;
-	color:beige;
-	font-family:'Comic Sans MS', 'Comic Sans', 'Chalkboard SE';
+	color:blanchedalmond;
+	font-family:'Arial', 'Comic Sans', 'Chalkboard SE';
 	font-size:15px;
 	font-weight:bold;
 	padding:0.2rem 0.5rem;
@@ -325,7 +325,7 @@ a:hover{
     box-shadow: none !important;
     width: auto !important;
     display: inline-flex !important;
-    color: beige
+    color: blanchedalmond
 }
 
 .accordion-button p{
