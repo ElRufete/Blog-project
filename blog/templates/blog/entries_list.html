@@ -56,8 +56,15 @@
         </div>
     <div class="border-bottom pb-3">
         <div class="centered">
+
             <h2>  {{ blog.text }} </h2>
+
             <p>{{blog.about}}</p>
+
+            <div class="centered pt-4 pb-3">
+                <img src = '{{ blog.author.avatar_url }}'>
+            </div> 
+
             <p class="message-link">
                 Creado por<a href="{% url 'accounts:user_profile' blog.author.id %}">
                     {{ blog.author }}</a>{{ blog.date_added | custom_time_since}}</p>

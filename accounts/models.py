@@ -2,6 +2,8 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from cloudinary.models import CloudinaryField
+from cloudinary import CloudinaryImage
 
 
 class CustomAccountManager(BaseUserManager):
@@ -40,6 +42,7 @@ class NewUser(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length= 140, blank= True)
     start_date = models.DateTimeField(default=timezone.now)
     about = models.TextField(_("about"), max_length=500, blank=True)
+    avatar = CloudinaryField('avatar', blank=True, null=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
 
@@ -48,7 +51,19 @@ class NewUser(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['user_name']
 
+    
+    def avatar_url(self, size=100):
+        public_id = self.avatar.public_id if self.avatar else 'default_avatar_qmiibj'
+        return CloudinaryImage(public_id).build_url(
+            width=size,
+            height=size, 
+            crop='thumb', 
+            gravity='face',
+            radius="max",
+            background='transparent',
+            format='png'
+            )
+    
     def __str__(self):
         return self.user_name
-    
 

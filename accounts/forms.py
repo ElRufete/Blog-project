@@ -23,8 +23,8 @@ class CustomAuthenticationForm(AuthenticationForm):
 class EditProfileForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'about',]
-        labels = {'about': 'Algo sobre ti', 'first_name': 'Nombre', 'last_name':'Apellidos'}
+        fields = ['first_name', 'last_name', 'about','avatar']
+        labels = {'about': 'Algo sobre ti', 'first_name': 'Nombre', 'last_name':'Apellidos', 'avatar':'Imagen de perfil'}
         widgets = {'about': forms.Textarea(attrs={'cols':80, 'rows':10})}
 
     

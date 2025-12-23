@@ -58,6 +58,7 @@ def user_profile(request, user_id):
     context = {'profile_user': profile_user,
                'mutuals' : mutuals,
                'profile_user_blogs' : profile_user_blogs,
+               'user_avatar' : profile_user.avatar_url(size=100)
             }
     return render(request, 'registration/user_profile.html', context)
 

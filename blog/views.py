@@ -10,8 +10,6 @@ from .forms import BlogForm, EntryForm, EntryCommentForm, CommentResponseForm
 User = get_user_model()
 
 def home(request):
-    from django.core.files.storage import default_storage
-    print(default_storage.__class__)
     return render(request, 'blog/home.html')
 
 
