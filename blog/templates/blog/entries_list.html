@@ -61,13 +61,13 @@
 
             <p>{{blog.about}}</p>
 
-            <div class="centered pt-4 pb-3">
-                <img src = '{{ blog.author.avatar_url }}'>
-            </div> 
-
-            <p class="message-link">
-                Creado por<a href="{% url 'accounts:user_profile' blog.author.id %}">
-                    {{ blog.author }}</a>{{ blog.date_added | custom_time_since}}</p>
+            <div class="centered-row">
+                <img class="push-up me-2" src='{{ blog.author.avatar_medium }}'>
+                
+                <p class="message-link">
+                    Creado por<a href="{% url 'accounts:user_profile' blog.author.id %}">
+                        {{ blog.author }}</a>{{ blog.date_added | custom_time_since}}</p>
+                </div>
             {% if blog.author == request.user or request.user in blog_collabs %}
                 <div class="blog-options pb-3 pt-3">
                     <div>
@@ -91,10 +91,11 @@
             aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlush">
                 <div class="accordion-body no-bg">
                     {% for collab in blog_collabs %}
-                        <p>
+                        <div class="left-row">
+                            <img class="push-up me-2" src='{{ collab.avatar_small }}'>
                             <a href="{% url 'accounts:user_profile' collab.id %}">
                                 {{collab.user_name}}</a>
-                        </p>
+                            </div>
                     {% empty %}
                         <p>Este blog no tiene colaboradores aún</p>
                     {% endfor %}
@@ -107,8 +108,11 @@
     <ul class="list-group pb-3 mb-4 border-bottom">
         {% for entry in entries %}
             <li class="list-group-item">
-              <a href="{% url 'blog:entry' blog.id entry.id %}">{{entry.title}}</a> 
-              <span>({{entry.author}}, {{entry.date_added | custom_time_since}})</span> 
+            <div class="left-row">
+                <img class="push-up me 3" src="{{ entry.author.avatar_small }}">
+                <a href="{% url 'blog:entry' blog.id entry.id %}">{{entry.title}}</a> 
+                <span>({{entry.author}}, {{entry.date_added | custom_time_since}})</span> 
+            </div>
             </li>
         {%empty%}
             {% if request.user == blog.author %}

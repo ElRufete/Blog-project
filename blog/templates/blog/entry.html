@@ -46,8 +46,11 @@
 
     <div class="pb-3 border-bottom centered">
         <h2>{{ entry.title }}</h2>
-        <p class="message-link">Publicado {{ entry.date_added | custom_time_since }} 
-            por<a href="{% url 'accounts:user_profile' entry.author.id %}">{{ entry.author }}</a> </p>
+        <div class="centered-row">
+            <img class="push-up me-2" src="{{ author_avatar }}">
+            <p class="message-link">Publicado {{ entry.date_added | custom_time_since }} 
+                por<a href="{% url 'accounts:user_profile' entry.author.id %}">{{ entry.author }}</a> </p>
+        </div>
     </div>
     
     <div class="pt-4 pb-3 stretch-line border-bottom">
@@ -110,6 +113,7 @@
                     <div class="border-start">
                         <div class="comment-bar ms-2">
                             <div class="comment-bar me-auto">
+                                <img class="push-up me-2" src="{{ comment.author.avatar_small }}">
                                 <p>{{comment.author}}, {{comment.date_added | custom_time_since}}:</p>
                             </div>
                         </div>
@@ -140,6 +144,7 @@
                         <div class="response-block border-start border-bottom">
                             <div class="comment-bar pb-1">
                                 <div class="comment-bar ms-8">
+                                    <img class="push-up me-2" src="{{ response.author.avatar_small }}">
                                     <p>{{response.author}} respondió:</p>
                                 </div>
                             </div>
@@ -150,11 +155,11 @@
                             </div>
 
                             {% if response.author == request.user %}
-                                <div class="ms-auto blog-options">
+                                <div class="right-row">
                                     <form action="{% url 'blog:delete_response' response.id %}" 
                                     method="POST">
                                         {% csrf_token %}
-                                        <button type="submit" class="logout-button">Borrar Respuesta</button>
+                                        <button type="submit" class="logout-button ms-auto">Borrar</button>
                                     </form>
                                 </div>
                             {% endif %}

@@ -15,7 +15,7 @@
 {% endblock page_header %}
 
 {% block content%}
-    <div class="blackboard p-3 mb-2 bg-dark text-white">
+    <div class="blackboard p-3 mb-2">
         <div class="centered">
             <form action="{% url 'accounts:register' %}" method='post'>
                 {% csrf_token %}

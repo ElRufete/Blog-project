@@ -77,7 +77,8 @@ def entry(request,blog_id,entry_id):
         'comments': comments,
         'comments_len': comments_len,
         'comments_word': comments_word,
-        'form':form
+        'form':form,
+        'author_avatar': entry.author.avatar_url(size=50),
     }
     return render(request, 'blog/entry.html', context)
 

@@ -64,6 +64,21 @@ class NewUser(AbstractBaseUser, PermissionsMixin):
             format='png'
             )
     
+    @property
+    def avatar_small(self):
+        return self.avatar_url(size=32)
+    
+    @property
+    def avatar_medium(self):
+        return self.avatar_url(size=50)
+    
+    @property
+    def avatar_large(self):
+        return self.avatar_url(size=128)
+    
+  
+    
+    
     def __str__(self):
         return self.user_name
 

@@ -13,7 +13,7 @@
 {% endblock page_header %}
 
 {% block content%}
-    <div class="blackboard p-3 mb-2">
+    <div class="blackboard adjusted p-3 mb-2">
         <div class="centered">
             <form action="{% url 'accounts:login' %}" method='post'>
                 {% csrf_token %}
@@ -21,12 +21,12 @@
                 {% bootstrap_button button_type="submit" content="Entrar" %}
             </form>
         </div>
-        
-    </div>
-    <div class="message-link">
-            <p class="medium">¿Aún tienes una cuenta?</p>
+        <div class="message-link">
+            <p><small>¿Aún no tienes una cuenta?</small></p>
             <a class="push-up" href="{% url 'accounts:register' %}">¡Regístrate!</a>
+        </div>
     </div>
+    
     </div>
 {% endblock content%}
 

@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from .models import BaseNotification
 from blog.models import Entry, Blog
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def activity(request):
     
     blog = Blog.objects.all()

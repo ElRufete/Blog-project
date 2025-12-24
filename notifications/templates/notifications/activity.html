@@ -1,4 +1,5 @@
 {% extends 'blog/layout.html' %}
+{% load timeago %}
 
 {% block page_header %}
 
@@ -36,54 +37,78 @@
     
 {% for notification in notifications %}
     {% if notification.notification_type == 'entry' %}
-        <div class="p-3 mb-1 blackboard  pb-3">
-            <div>
+        <div class="p-3 mb-1 blackboard  pb-1">
+            <div class="left-row">
+                <img class="push-up me-2" src="{{ notification.newentrynotification.creator.author.avatar_small }}">
+                {% if notification.newentrynotification.creator.blog.author == request.user %}
+                <p>
+                    ¡{{notification.newentrynotification.creator.author}} 
+                    ha publicado una nueva entrada en tu blog:
+                    "{{notification.newentrynotification.creator.blog}}"!
+                </p>
+                {% elif notification.newentrynotification.creator.blog.author == notification.newentrynotification.creator.author %}
                 <p>
                     ¡{{notification.newentrynotification.creator.author}} 
                     ha publicado una nueva entrada en su blog:
                     "{{notification.newentrynotification.creator.blog}}"!
                 </p>
+                {% else %}
+                <p>
+                    ¡{{notification.newentrynotification.creator.author}} 
+                    ha publicado una nueva entrada en el blog:
+                    "{{notification.newentrynotification.creator.blog}}"!
+                </p>
+                {% endif %}
             </div>
+            <p class="primary"><small>{{ notification.timestamp | custom_time_since }}</small></p>   
         </div>          
     {% elif notification.notification_type == 'blog' %}
-        <div class="p-3 mb-1 blackboard  pb-3">
-            <div>
+        <div class="p-3 mb-1 blackboard  pb-1">
+            <div class="left-row">
+                <img class="push-up me-2" src="{{ notification.newblognotification.creator.author.avatar_small }}">
                 <p>
                     ¡{{notification.newblognotification.creator.author}} 
                     ha creado un nuevo blog titulado:
                     "{{notification.newblognotification.creator}}"!
                 </p>
             </div>
+            <p class="primary"><small>{{ notification.timestamp | custom_time_since }}</small></p>
         </div>          
     {% elif notification.notification_type == 'comment' %}
-        <div class="p-3 mb-1 blackboard  pb-3">
-            <div>
+        <div class="p-3 mb-1 blackboard  pb-1">
+            <div class="left-row">
+                <img class="push-up me-2" src="{{ notification.commentnotification.creator.author.avatar_small }}">
                 <p>
                     ¡{{notification.commentnotification.creator.author}} 
-                    Ha comentado:
+                    ha comentado:
                     "{{notification.commentnotification.creator.text}}"!
                 </p>
             </div>
+            <p class="primary"><small>{{ notification.timestamp | custom_time_since }}</small></p>
         </div>          
     {% elif notification.notification_type == 'response' %}
-        <div class="p-3 mb-1 blackboard  pb-3">
-            <div>
+        <div class="p-3 mb-1 blackboard  pb-1">
+            <div class="left-row">
+                <img class="push-up me-2" src="{{ notification.responsenotification.creator.author.avatar_small }}">
                 <p>
                     {{notification.responsenotification.creator.author}} 
                     ha respondido a tu comentario:
                     {{notification.responsenotification.creator.text}}
                 </p>
             </div>
+            <p class="primary"><small>{{ notification.timestamp | custom_time_since }}</small></p>
         </div>          
     {% elif notification.notification_type == 'friend request' %}
-        <div class="p-3 mb-1 blackboard  pb-3">
+        <div class="p-3 mb-1 blackboard  pb-1">
             <div class="friends-row pb-2">
-                <div>
+                <div class="left-row">
+                <img class="push-up me-2" src="{{ notification.friendrequestnotification.creator.sender.avatar_small }}">
                     <p>
                         {{notification.friendrequestnotification.creator.sender}} 
-                        Te ha enviado una solicitud de amistad
+                        te ha enviado una solicitud de amistad
                     </p>
                 </div>
+                
                 {% if notification.friendrequestnotification.creator.is_active == True  %}
                 <div class="friends-row-buttons">
                     <form action="{% url 'friends:accept_request' notification.friendrequestnotification.creator.id %}"
@@ -102,16 +127,18 @@
                     </form>
                 </div>
                 {% endif %}
-            </div>  
+            </div> 
+            <p class="primary"><small>{{ notification.timestamp | custom_time_since }}</small></p> 
         </div>    
 
     {% elif notification.notification_type == 'collab request' %}
-        <div class="p-3 mb-1 blackboard  pb-3">
+        <div class="p-3 mb-1 blackboard  pb-1">
             <div class="friends-row pb-2">
-                <div>
+                <div class="left-row">
+                <img class="push-up me-2" src="{{ notification.collabrequestnotification.creator.sender.avatar_small }}">
                     <p>
                         {{notification.collabrequestnotification.creator.sender}} 
-                        Quiere que colabores en su blog:
+                        quiere que colabores en su blog:
                         "{{notification.collabrequestnotification.creator.blog}} "
                     </p>
                 </div>
@@ -134,6 +161,7 @@
                     </div>
                 {% endif %}
             </div>
+            <p class="primary"><small>{{ notification.timestamp | custom_time_since }}</small></p>
         </div>  
     {% endif %}      
 {% empty %}

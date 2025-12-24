@@ -1,22 +1,22 @@
 body{
-    background-color: black;
-    color: blanchedalmond;
+    background-color: whitesmoke;
+    color: black;
 }
 
 .navbar-style {
-    background-color: rgba(53, 21, 21, 0.797);
-    border: solid blanchedalmond 1px;
-    color: beige;
+    background-color: brown;
+    border: solid beige 1px;
+    color: white;
     font-family:'Arial', 'Comic Sans, Chalkboard SE';
 }
 
 nav a{
-    color: beige;
+    color: white;
     margin-right: 0.5rem;
     margin-left: 0.5rem
 }
 nav a:visited{
-    color: beige;
+    color: white;
 }
 nav a:hover{
     color: lightseagreen;
@@ -29,14 +29,14 @@ nav button, span{
 
 
 a{
-    color: blanchedalmond;
+    color: black;
     display: inline;
     font-size: 1.2rem;
     margin-right: 0.5rem;
     margin-left: 0.5rem
 }
 a:visited{
-    color: blanchedalmond;
+    color: black;
 }
 a:hover{
     color: lightseagreen;
@@ -46,13 +46,16 @@ a:hover{
 .blackboard{
     display: flex;
     flex-direction: column;
-    background-color: rgba(246, 250, 244, 0.097) ;
+    background-color: beige;
     font-family:'Arial', 'Comic Sans', 'Chalkboard SE';
     border: solid 0.1rem darkgray;
+    box-shadow: 0 0.4rem 0.9rem 0 rgba(0, 0, 0, 0.4);
     border-radius: 0.5rem;
     max-height: fit-content;
     margin-top: 0.5rem;
     padding: 0 1.5rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
 }
 
 .adjusted{
@@ -63,8 +66,26 @@ a:hover{
 
 .blackboard .list-group-item{
     background-color: transparent !important;
-    color: blanchedalmond;
+    color: black;
     border-color: transparent
+}
+
+.centered-row{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.left-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+.right-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 
 .blackboard .centered{
@@ -80,11 +101,11 @@ a:hover{
 }
 
 .title-list a{
-    color: blanchedalmond
+    color: black
 }
 
 .title-list a:visited{
-    color: blanchedalmond
+    color: black
 }
 
 .title-list a:hover{
@@ -118,10 +139,10 @@ a:hover{
 }
 
 .push-up a{
-    color: blanchedalmond;
+    color: black;
 }
 .push-up a:visited{
-    color: blanchedalmond;
+    color: black;
 }
 .push-up a:hover{
     color: lightseagreen;
@@ -129,7 +150,7 @@ a:hover{
 
 .logout-button {
     all: unset;                 
-    color: blanchedalmond;               
+    color: white;               
     font-family: 'Arial', 'Comic Sans', 'Chalkboard SE';
     font-size: 1.2rem;
     cursor: pointer;
@@ -152,7 +173,7 @@ a:hover{
 }
 
  .bg-dark .form-text {
-    color: blanchedalmond !important;  
+    color: black !important;  
 }
 
 @media (max-width: 767.98px){
@@ -196,7 +217,7 @@ a:hover{
 
 .blog-options button{
     all: unset;                 
-    color: blanchedalmond;               
+    color: black;               
     font-family: 'Arial', 'Comic Sans', 'Chalkboard SE';
     font-size: 1rem;
     cursor: pointer;
@@ -210,7 +231,7 @@ a:hover{
 
 .blog-options button:visited{
     margin-top: 0.5rem;
-    color: blanchedalmond;
+    color: black;
 }
 
 .stretch-line{
@@ -232,10 +253,10 @@ a:hover{
 
 .comment-bar a{
     font-size: 1rem;
-    color: blanchedalmond;
+    color: black;
 }
 .comment-bar a:visited{
-    color: blanchedalmond;
+    color: black;
 }
 .comment-bar a:hover{
     color: lightseagreen;
@@ -243,7 +264,7 @@ a:hover{
 
 .comment-bar button{
     all: unset;                 
-    color: blanchedalmond;               
+    color: white;               
     font-family: 'Arial', 'Comic Sans', 'Chalkboard SE';
     font-size: 1rem;
     cursor: pointer;
@@ -256,7 +277,7 @@ a:hover{
 }
 
 .comment-bar button:visited{
-    color: blanchedalmond
+    color: white
 }
 
 .response-block{
@@ -298,7 +319,7 @@ a:hover{
 	border:1px solid #337fed;
 	display:inline-flex;
 	cursor:pointer;
-	color:blanchedalmond;
+	color:white;
 	font-family:'Arial', 'Comic Sans', 'Chalkboard SE';
 	font-size:15px;
 	font-weight:bold;
@@ -325,7 +346,7 @@ a:hover{
     box-shadow: none !important;
     width: auto !important;
     display: inline-flex !important;
-    color: blanchedalmond
+    color: black
 }
 
 .accordion-button p{

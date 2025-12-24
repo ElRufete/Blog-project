@@ -12,8 +12,11 @@
             <ul class="list-group pb-2 pt-4 mb-4 bg-none">
                 {% if request.user.is_authenticated %}
                     {%for blog in user_blogs%}
-                        <li class="list-group-item border-none                                                                                                                                                              ">
-                            <a href="{% url 'blog:entries_list' blog.id %}">{{ blog.text }}</a>
+                        <li class="list-group-item border-none">   
+                            <div class="left-row">
+                                <img class="push-up me-2" src="{{ blog.author.avatar_small }}">                                                                                                                                                       
+                                <a href="{% url 'blog:entries_list' blog.id %}">{{ blog.text }}</a>
+                            </div>
                         </li>
 
                     {%empty%}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
@@ -29,8 +32,11 @@
             <ul class="list-group pb-2 pt-4 mb-4 bg-none">
                 {% if request.user.is_authenticated %}
                     {%for blog in collaborating_blogs%}
-                        <li class="list-group-item border-none                                                                                                                                                              ">
-                            <a href="{% url 'blog:entries_list' blog.id %}">{{ blog.text }}</a>
+                        <li class="list-group-item border-none">   
+                            <div class="left-row">
+                                <img class="push-up me-2" src="{{ blog.author.avatar_small }}">                                                                                                                                                       
+                                <a href="{% url 'blog:entries_list' blog.id %}">{{ blog.text }}</a>
+                            </div>
                         </li>
 
                     {%empty%}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
@@ -46,10 +52,12 @@
             <ul class="list-group pb-2 pt-4 mb-4 bg-none">
                 {% if request.user.is_authenticated %}
                     {%for blog in friends_blogs%}
-                        <li class="list-group-item border-none                                                                                                                                                              ">
-                            <a href="{% url 'blog:entries_list' blog.id %}">{{ blog.text }}</a>
+                        <li class="list-group-item border-none">   
+                            <div class="left-row">
+                                <img class="push-up me-2" src="{{ blog.author.avatar_small }}">                                                                                                                                                       
+                                <a href="{% url 'blog:entries_list' blog.id %}">{{ blog.text }}</a>
+                            </div>
                         </li>
-
                     {%empty%}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
                         <p> No estás colaborando en ningún blog </p>
                     
@@ -65,8 +73,11 @@
         <ul class="list-group pb-2 pt-4 mb-4 bg-none">
             {% if request.user.is_authenticated %}
                 {%for blog in other_blogs%}
-                    <li class="list-group-item">
-                        <a href="{% url 'blog:entries_list' blog.id %}">{{ blog.text }}</a>
+                    <li class="list-group-item border-none">   
+                        <div class="left-row">
+                            <img class="push-up me-2" src="{{ blog.author.avatar_small }}">                                                                                                                                                       
+                            <a href="{% url 'blog:entries_list' blog.id %}">{{ blog.text }}</a>
+                        </div>
                     </li>
             
                 {%empty%}
@@ -74,17 +85,17 @@
                 {% endfor %}
             {% else %}
                 {%for blog in blogs%}
-                    <li class="list-group-item">
+                    <li class="list-group-item border-none">   
+                        <div class="left-row">
+                        <img class="push-up me-2" src="{{ blog.author.avatar_small }}">                                                                                                                                                       
                         <a href="{% url 'blog:entries_list' blog.id %}">{{ blog.text }}</a>
+                        </div>
                     </li>
             
                 {%empty%}
                     <p>Aún no se ha creado ningún blog </p>
                 {% endfor %}
             {% endif %}
-        </ul>
-
-
-       
+        </ul>       
     </div>
 {%endblock content%}
