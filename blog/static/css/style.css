@@ -3,12 +3,29 @@ body{
     color: black;
 }
 
+h2, h3{
+    font-family: "Vend Sans", sans-serif;
+}
+
+.monofett-regular {
+  font-family: "Monofett", monospace;
+  font-weight: 400;
+  font-style: normal;
+}
+
 .navbar-style {
     background-color: brown;
     border: solid beige 1px;
     color: white;
     font-family:'Arial', 'Comic Sans, Chalkboard SE';
 }
+
+.badeen-display-regular {
+  font-family: "Badeen Display", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
 
 nav a{
     color: white;

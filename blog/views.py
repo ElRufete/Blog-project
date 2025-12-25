@@ -39,7 +39,7 @@ def blogs_list(request):
 
 def entries_list(request,blog_id):
     blog = Blog.objects.get(id=blog_id)
-    entries = blog.entry_set.order_by('date_added')
+    entries = blog.entry_set.order_by('-date_added')
     blog_collabs = blog.collaborators.collab_list.all()
     collabs_len = len(blog_collabs)
     collabs_word = "Colaboradores" if collabs_len != 1 else "Colaborador"

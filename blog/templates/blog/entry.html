@@ -45,11 +45,14 @@
     </div>
 
     <div class="pb-3 border-bottom centered">
-        <h2>{{ entry.title }}</h2>
+        <h2><strong>{{ entry.title }}</strong></h2>
         <div class="centered-row">
-            <img class="push-up me-2" src="{{ author_avatar }}">
-            <p class="message-link">Publicado {{ entry.date_added | custom_time_since }} 
-                por<a href="{% url 'accounts:user_profile' entry.author.id %}">{{ entry.author }}</a> </p>
+            <a href="{% url 'accounts:user_profile' entry.author.id %}">
+                <img class="push-up me-2" src="{{ author_avatar }}">
+            </a>
+            <p class="message-link"><a href="{% url 'accounts:user_profile' entry.author.id %}">{{ entry.author }}</a>
+                - {{ entry.date_added | custom_time_since }} 
+            </p>
         </div>
     </div>
     
@@ -113,8 +116,12 @@
                     <div class="border-start">
                         <div class="comment-bar ms-2">
                             <div class="comment-bar me-auto">
+
                                 <img class="push-up me-2" src="{{ comment.author.avatar_small }}">
-                                <p>{{comment.author}}, {{comment.date_added | custom_time_since}}:</p>
+
+                                <p class="text-muted">
+                                    <small>{{comment.author}}, {{comment.date_added | custom_time_since}}:</small>   
+                                </p>
                             </div>
                         </div>
         
@@ -144,8 +151,13 @@
                         <div class="response-block border-start border-bottom">
                             <div class="comment-bar pb-1">
                                 <div class="comment-bar ms-8">
+
                                     <img class="push-up me-2" src="{{ response.author.avatar_small }}">
-                                    <p>{{response.author}} respondió:</p>
+
+                                    <p class="text-muted">
+                                        <small>{{response.author}} respondió:</small>   
+                                    </p>
+                                    
                                 </div>
                             </div>
 

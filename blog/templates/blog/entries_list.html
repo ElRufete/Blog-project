@@ -57,17 +57,19 @@
     <div class="border-bottom pb-3">
         <div class="centered">
 
-            <h2>  {{ blog.text }} </h2>
+            <h2><strong> {{ blog.text }} </strong></h2>
 
             <p>{{blog.about}}</p>
 
             <div class="centered-row">
                 <img class="push-up me-2" src='{{ blog.author.avatar_medium }}'>
                 
-                <p class="message-link">
-                    Creado por<a href="{% url 'accounts:user_profile' blog.author.id %}">
-                        {{ blog.author }}</a>{{ blog.date_added | custom_time_since}}</p>
-                </div>
+                <p class="message-link text-muted">
+                    <small>Creado por<a href="{% url 'accounts:user_profile' blog.author.id %}">
+                        {{ blog.author }}</a>{{ blog.date_added | custom_time_since}}</small>
+                </p>
+            </div>
+            
             {% if blog.author == request.user or request.user in blog_collabs %}
                 <div class="blog-options pb-3 pt-3">
                     <div>
@@ -109,10 +111,10 @@
         {% for entry in entries %}
             <li class="list-group-item">
             <div class="left-row">
-                <img class="push-up me 3" src="{{ entry.author.avatar_small }}">
+                <img class="push-up me-3" src="{{ entry.author.avatar_small }}">
                 <a href="{% url 'blog:entry' blog.id entry.id %}">{{entry.title}}</a> 
-                <span>({{entry.author}}, {{entry.date_added | custom_time_since}})</span> 
             </div>
+                <p class="text-muted"><small>({{entry.author}}, {{entry.date_added | custom_time_since}})</small></p>
             </li>
         {%empty%}
             {% if request.user == blog.author %}
