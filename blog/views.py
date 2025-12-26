@@ -88,7 +88,7 @@ def new_blog(request):
     if request.method != 'POST':
         form = BlogForm()
     else:
-        form = BlogForm(data = request.POST)
+        form = BlogForm(data = request.POST, files=request.FILES)
         if form.is_valid():
             new_blog = form.save(commit=False)
             new_blog.author = request.user

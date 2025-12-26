@@ -6,9 +6,10 @@ from .models import Blog, Entry, EntryComment, CommentResponse
 class BlogForm(forms.ModelForm):
     class Meta:
         model = Blog
-        fields = ['text','about']
+        fields = ['text','about', 'banner']
         labels = {'text':'Título',
-                  'about': 'Descripción'}
+                  'about': 'Descripción',
+                  'banner': 'Imagen de portada',}
         widgets = {
             'about': forms.Textarea(attrs={'cols':80, 'rows': 3}),
             'text': forms.Textarea(attrs={'cols':50, 'rows': 1}),}
