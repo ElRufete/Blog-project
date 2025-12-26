@@ -7,6 +7,7 @@ User = get_user_model()
 class Blog(models.Model):
     text = models.CharField(max_length=140)
     about = models.CharField(max_length = 200, blank=True,)
+    banner = models.ImageField(blank=True, null=True, upload_to='banners/')
     date_added = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -17,6 +18,13 @@ class Blog(models.Model):
         if account not in self.collaborators:
             self.collaborators.add(account)
             self.save()
+
+    @property
+    def banner_url(self):
+        if self.banner:
+            return self.banner.url
+        
+        return 'https://res.cloudinary.com/drudyw2gl/image/upload/v1766712403/libro-pasando-paginas_pccza0_c_fill_w_240_h_135_ar_16_9_nqefmh.jpg'
     
 class Entry(models.Model):
     class Meta():

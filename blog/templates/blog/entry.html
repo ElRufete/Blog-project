@@ -116,9 +116,9 @@
                     <div class="border-start">
                         <div class="comment-bar ms-2">
                             <div class="comment-bar me-auto">
-
-                                <img class="push-up me-2" src="{{ comment.author.avatar_small }}">
-
+                                <a href="{% url 'accounts:user_profile' comment.author.id %}">
+                                    <img class="push-up me-2" src="{{ comment.author.avatar_small }}">
+                                </a>
                                 <p class="text-muted">
                                     <small>{{comment.author}}, {{comment.date_added | custom_time_since}}:</small>   
                                 </p>
@@ -151,9 +151,9 @@
                         <div class="response-block border-start border-bottom">
                             <div class="comment-bar pb-1">
                                 <div class="comment-bar ms-8">
-
-                                    <img class="push-up me-2" src="{{ response.author.avatar_small }}">
-
+                                    <a href="{% url 'accounts:user_profile' response.author.id %}">
+                                        <img class="push-up me-2" src="{{ response.author.avatar_small }}">
+                                    </a>
                                     <p class="text-muted">
                                         <small>{{response.author}} respondió:</small>   
                                     </p>

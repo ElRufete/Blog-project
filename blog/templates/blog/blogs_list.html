@@ -1,100 +1,181 @@
 {% extends "blog/layout.html" %}
+{% load timeago %}
 
     <title>Home</title>
 
 {% block content%}
     <div class="blackboard">
-         <div class="text-center pb-3">
+        {% if request.user.is_authenticated %}
+            <div class="text-center pb-3">
                 <h3> Tus Blogs </h3>
                 <a href="{% url 'blog:new_blog' %}"> Crear Blog </a>
             </div>
-        {% if user_blogs %}
-            <ul class="list-group pb-2 pt-4 mb-4 bg-none">
-                {% if request.user.is_authenticated %}
-                    {%for blog in user_blogs%}
-                        <li class="list-group-item border-none">   
-                            <div class="left-row">
-                                <img class="push-up me-2" src="{{ blog.author.avatar_small }}">                                                                                                                                                       
-                                <a href="{% url 'blog:entries_list' blog.id %}">{{ blog.text }}</a>
+            {% if user_blogs %}
+                <div class="left-row">
+                    {% for blog in user_blogs %}
+
+                    
+                        <div class="card shadowed m-4 block" style="width: 18rem;">
+                            <img src="{{blog.banner_url}}" class="card-img-top" alt="Blog banner">
+                            <div class="card-body">
+                                <h5 class="card-title"><strong>{{ blog.text }}</strong></h5>
+                            
+                                <p class="card-text">{{ blog.about | truncatechars:80 }}</p>
+                            
+                                <a href="{% url 'blog:entries_list' blog.id %}" class="stretched-link"></a>
+
+                                <div class="left-row">
+                                    <a href="{% url 'accounts:user_profile' blog.author.id %}">
+                                        <img src="{{ blog.author.avatar_small }}">
+                                    </a>
+
+                                    <p class="text-muted"><small>{{ blog.date_added | custom_time_since }}</small></p>
+                                </div>
                             </div>
-                        </li>
+                        </div>
+                    
 
                     {%empty%}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
                         <p>Aún no has creado ningún blog </p>
                     
                     {% endfor %}
-                {% endif %}
-            </ul>
-        {% endif %}
+                </div>
+            {% endif %}
         
-        {% if collaborating_blogs %}
-            <h3 class="centered">Blogs en los que colaboras</h3>
-            <ul class="list-group pb-2 pt-4 mb-4 bg-none">
-                {% if request.user.is_authenticated %}
-                    {%for blog in collaborating_blogs%}
-                        <li class="list-group-item border-none">   
-                            <div class="left-row">
-                                <img class="push-up me-2" src="{{ blog.author.avatar_small }}">                                                                                                                                                       
-                                <a href="{% url 'blog:entries_list' blog.id %}">{{ blog.text }}</a>
-                            </div>
-                        </li>
+            {% if collaborating_blogs %}
+                <div class="text-center pb-3">
+                    <h3> Blogs en los que colaboras </h3>
+                    <a href="{% url 'blog:new_blog' %}"> Crear Blog </a>
+                </div>
+                <div class="left-row">
+                    {% for blog in collaborating_blogs %}
 
-                    {%empty%}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
-                        <p> No estás colaborando en ningún blog </p>
+                    
+                        <div class="card block shadowed m-4" style="width: 18rem;">
+                            <img src="{{blog.banner_url}}" class="card-img-top" alt="Blog banner">
+                            <div class="card-body">
+                                <h5 class="card-title"><strong>{{ blog.text }}</strong></h5>
+                            
+                                <p class="card-text">{{ blog.about | truncatechars:80 }}</p>
+                            
+                                <a href="{% url 'blog:entries_list' blog.id %}" class="stretched-link"></a>
+
+                                <div class="left-row">
+                                    <a href="{% url 'accounts:user_profile' blog.author.id %}">
+                                        <img src="{{ blog.author.avatar_small }}">
+                                    </a>
+
+                                    <p class="text-muted"><small>{{ blog.date_added | custom_time_since }}</small></p>
+                                </div>
+                            </div>
+                        </div>
                     
                     {% endfor %}
-                {% endif %}
-            </ul>
-        {% endif %}
+                </div>
+            {% endif %}
 
-        {% if friends_blogs %}
-            <h3 class="centered">Blogs de tus amigos</h3>
-            <ul class="list-group pb-2 pt-4 mb-4 bg-none">
-                {% if request.user.is_authenticated %}
-                    {%for blog in friends_blogs%}
-                        <li class="list-group-item border-none">   
-                            <div class="left-row">
-                                <img class="push-up me-2" src="{{ blog.author.avatar_small }}">                                                                                                                                                       
-                                <a href="{% url 'blog:entries_list' blog.id %}">{{ blog.text }}</a>
+            {% if friends_blogs %}
+                <div class="text-center pb-3">
+                    <h3> Blogs de tus amigos </h3>
+                    <a href="{% url 'blog:new_blog' %}"> Crear Blog </a>
+                </div>
+
+                <div class="left-row">
+                    {% for blog in friends_blogs %}
+
+                    
+                        <div class="card block shadowed m-4" style="width: 18rem;">
+                            <img src="{{blog.banner_url}}" class="card-img-top" alt="Blog banner">
+                            <div class="card-body">
+                                <h5 class="card-title"><strong>{{ blog.text }}</strong></h5>
+                            
+                                <p class="card-text">{{ blog.about | truncatechars:80 }}</p>
+                            
+                                <a href="{% url 'blog:entries_list' blog.id %}" class="stretched-link"></a>
+
+                                <div class="left-row">
+                                    <a href="{% url 'accounts:user_profile' blog.author.id %}">
+                                        <img src="{{ blog.author.avatar_small }}">
+                                    </a>
+
+                                    <p class="text-muted"><small>{{ blog.date_added | custom_time_since }}</small></p>
+                                </div>
                             </div>
-                        </li>
+                        </div>
+                    
+
                     {%empty%}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
-                        <p> No estás colaborando en ningún blog </p>
+                        <p>Aún no has creado ningún blog </p>
                     
                     {% endfor %}
-                {% endif %}
-            </ul>
+                </div>
+            {% endif %}
         {% endif %}
-        
 
         </ul>
         <h3 class="text-center pb-3"> Blogs de la comunidad </h3>
 
         <ul class="list-group pb-2 pt-4 mb-4 bg-none">
             {% if request.user.is_authenticated %}
-                {%for blog in other_blogs%}
-                    <li class="list-group-item border-none">   
-                        <div class="left-row">
-                            <img class="push-up me-2" src="{{ blog.author.avatar_small }}">                                                                                                                                                       
-                            <a href="{% url 'blog:entries_list' blog.id %}">{{ blog.text }}</a>
+                <div class="left-row">
+                    {% for blog in other_blogs %}
+
+                    
+                        <div class="card block shadowed m-4" style="width: 18rem;">
+                            <img src="{{blog.banner_url}}" class="card-img-top" alt="Blog banner">
+                            <div class="card-body">
+                                <h5 class="card-title"><strong>{{ blog.text }}</strong></h5>
+                            
+                                <p class="card-text">{{ blog.about | truncatechars:80 }}</p>
+                            
+                                <a href="{% url 'blog:entries_list' blog.id %}" class="stretched-link"></a>
+
+                                <div class="left-row">
+                                    <a href="{% url 'accounts:user_profile' blog.author.id %}">
+                                        <img src="{{ blog.author.avatar_small }}">
+                                    </a>
+
+                                    <p class="text-muted"><small>{{ blog.date_added | custom_time_since }}</small></p>
+                                </div>
+                            </div>
                         </div>
-                    </li>
-            
-                {%empty%}
-                    <p>Aún no se ha creado ningún blog </p>
-                {% endfor %}
+                    
+
+                    {%empty%}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+                        <p>Aún no has creado ningún blog </p>
+                    
+                    {% endfor %}
+                </div>
             {% else %}
-                {%for blog in blogs%}
-                    <li class="list-group-item border-none">   
-                        <div class="left-row">
-                        <img class="push-up me-2" src="{{ blog.author.avatar_small }}">                                                                                                                                                       
-                        <a href="{% url 'blog:entries_list' blog.id %}">{{ blog.text }}</a>
+                <div class="left-row">
+                    {% for blog in blogs %}
+
+                    
+                        <div class="card block shadowed m-4" style="width: 18rem;">
+                            <img src="{{blog.banner_url}}" class="card-img-top" alt="Blog banner">
+                            <div class="card-body">
+                                <h5 class="card-title"><strong>{{ blog.text }}</strong></h5>
+                            
+                                <p class="card-text">{{ blog.about | truncatechars:80 }}</p>
+                            
+                                <a href="{% url 'blog:entries_list' blog.id %}" class="stretched-link"></a>
+
+                                <div class="left-row">
+                                    <a href="{% url 'accounts:user_profile' blog.author.id %}">
+                                        <img src="{{ blog.author.avatar_small }}">
+                                    </a>
+
+                                    <p class="text-muted"><small>{{ blog.date_added | custom_time_since }}</small></p>
+                                </div>
+                            </div>
                         </div>
-                    </li>
-            
-                {%empty%}
-                    <p>Aún no se ha creado ningún blog </p>
-                {% endfor %}
+                    
+
+                    {%empty%}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+                        <p>Aún no has creado ningún blog </p>
+                    
+                    {% endfor %}
+                </div>
             {% endif %}
         </ul>       
     </div>

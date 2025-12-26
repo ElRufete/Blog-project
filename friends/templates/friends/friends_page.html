@@ -39,7 +39,11 @@
     {% for friend in user_friends %}
     <div class="friends-list pb-2 pt-2">
         <div class="friends-row border-bottom pb-2">
-            <div>
+            <div class="left-row">
+
+                <a href="{% url 'accounts:user_profile' friend.id %}">
+                    <img class="push-up"src="{{friend.avatar_small}}">
+                </a>
                 <a href="{% url 'accounts:user_profile' friend.id %}">{{friend.user_name}}</a>
             </div>
             <div>
@@ -63,8 +67,13 @@
     {% for fr_request in user_requests %}
         <div class="friends-list pb-2 pt-2">
             <div class="friends-row border-bottom pb-2">
-                <div>
-                    <p>{{fr_request.sender}} te ha enviado una solicitud de amistad
+                <div class="left-row">
+                <a href="{% url 'accounts:user_profile' fr_request.sender.id %}">
+                    <img class="push-up" src="{{fr_request.sender.avatar_small}}">
+                </a>
+                    <p>
+                        <a href="{% url 'accounts:user_profile' fr_request.sender.id %}">{{fr_request.sender.user_name}}</a>
+                        
                 </div>
                 <div class="friends-row-buttons">
                     <form action="{% url 'friends:accept_request' fr_request.id %}"

@@ -71,8 +71,26 @@ a:hover{
     max-height: fit-content;
     margin-top: 0.5rem;
     padding: 0 1.5rem;
-    margin-left: 1rem;
-    margin-right: 1rem;
+    margin-left: 0.4rem;
+    margin-right: 0.4rem;
+}
+.blog-card{
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(246, 246, 232);
+    font-family:'Arial', 'Comic Sans', 'Chalkboard SE';
+    border: solid 0.1rem darkgray;
+    box-shadow: 0 0.4rem 0.9rem 0 rgba(0, 0, 0, 0.4);
+    border-radius: 0.5rem;
+    max-height: fit-content;
+    margin-top: 0.5rem;
+    padding: 0 1.5rem;
+    margin-left: 0.4rem;
+    margin-right: 0.4rem;
+}
+
+.shadowed{
+    box-shadow: 0 0.4rem 0.9rem 0 rgba(0, 0, 0, 0.4);
 }
 
 .adjusted{
@@ -94,10 +112,15 @@ a:hover{
     justify-content: center;
 }
 
+.block{
+    flex-shrink: 0;
+}
+
 .left-row{
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    flex-wrap: wrap;
 }
 .right-row{
     display: flex;

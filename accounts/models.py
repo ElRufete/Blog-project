@@ -61,7 +61,9 @@ class NewUser(AbstractBaseUser, PermissionsMixin):
             gravity='face',
             radius="max",
             background='transparent',
-            format='png'
+            format='png',
+            fetch_format='auto',
+            quality='auto',
             )
     
     @property
