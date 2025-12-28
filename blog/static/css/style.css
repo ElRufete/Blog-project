@@ -116,6 +116,12 @@ a:hover{
     flex-shrink: 0;
 }
 
+.column-footer{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
 .left-row{
     display: flex;
     flex-direction: row;

@@ -134,6 +134,23 @@ def edit_entry(request, entry_id):
     context = {'entry':entry, 'blog':blog, 'form':form}
     return render (request, 'blog/edit_entry.html', context)
 
+@login_required
+def edit_blog(request, blog_id):
+    
+    blog = Blog.objects.get(id=blog_id)
+    check_author_or_collab(request, blog.author, blog)
+    if request.method != 'POST':
+        form = BlogForm(instance=blog)
+    else:
+        form = BlogForm(instance=blog, data=request.POST, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('blog:entries_list', blog.id)
+        
+    context = {'blog':blog, 
+               'form':form}
+    return render (request, 'blog/edit_blog.html', context)
+
 
 @login_required
 def comment_entry(request, entry_id):
