@@ -1,0 +1,93 @@
+{% load static %}
+{% load django_bootstrap5 %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Blogoteca</title>
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% bootstrap_javascript %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vend+Sans:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+    
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark navbar-style">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+            data-bs-target="#navbarCollapse" aria-controlls="navbarCollapse" 
+            aria-expanded="false" aria-label="toggle-navigation">
+                <span class="navbar-toggler-icon me-auto"></span>
+            </button>
+            <div class="collapse navbar-collapse ms-auto" id="navbarCollapse">
+                <ul class="navbar-nav me-auto mb-md-0">
+                    <li class="nav-link"> 
+                        <a href="{% url 'blog:home' %}">Portada</a>
+                    </li>
+                        <span class="d-none d-md-inline">|</span>
+                    <li class="nav-link">
+                        <a href="{% url 'blog:blogs_list' %}">Blogs</a>
+
+                        <span class="d-none d-md-inline">|</span></li>
+                </ul>
+
+                <ul class="navbar-nav ms-auto mb-2 mb-md-0 pt-0 align-items-md-center">
+                {% if request.user.is_authenticated %}
+                    {% if request.user.first_name %}
+                        <div class="greeting">
+                            <li class="nav-item d-none d-md-inline">¡Hola,<a 
+                                href="{% url 'accounts:user_profile' request.user.id %}">{{ request.user.first_name }}</a>!</li>
+                            <span class="d-none d-md-inline">|</span>
+                        </div>
+                    {% else %}
+                        <div class="greeting">
+                            <li class="nav-item d-none d-md-inline ">¡Hola,<a 
+                                href="{% url 'accounts:user_profile' request.user.id %}">
+                                {{ request.user.user_name }}</a>!</li>
+                            <span class="d-none d-md-inline">|</span>
+                        </div>
+                    {% endif %}
+                    <li class="nav-item"> 
+                        <a href="{% url 'friends:friends_page' %}">Amigos</a>
+                    </li>
+                    <span class="d-none d-md-inline">|</span>
+                    <li class="nav-item"> 
+                    <form action="{% url 'notifications:activity' %}" 
+                    method="post" class="position-relative">
+                        {% csrf_token %}
+                        <button type="submit" class="logout-button nav-item">Actividad</button>
+                        {% if unread_notifications_counter > 0 %}
+                        <span class="position-absolute top-0 start-100 translate-middle 
+                        badge rounded-pill bg-primary">
+                        {{ unread_notifications_display }}
+                            <span class="visually-hidden">Nuevas notificaciones</span>
+                        </span>
+                        {% endif %}
+                    </form>
+                    </li>
+                    <span class="d-none d-md-inline">|</span>
+                    <form action="{% url 'accounts:logout' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="logout-button nav-item">Cerrar sesión</button>
+                    </form>
+                {% else %}
+                    <li class="nav-item">
+                    <a href="{% url 'accounts:login' %}">Acceder</a> 
+                    <span class="d-none d-md-inline">|</span></li>
+                    <li class="nav-item">
+                    <a href="{% url 'accounts:register' %}">Registrarse</a> </li>
+                {% endif %}
+
+                </ul>
+            </div>  
+        </div>
+    </nav>
+    {% block page_header %} {% endblock page_header %}
+    {% block content%} {% endblock content%}
+</body>
+</html>

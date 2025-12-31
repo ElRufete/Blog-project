@@ -1,4 +1,5 @@
 {% extends 'blog/layout.html' %}
+{% load timeago %}
 
 {% block page_header %}
 
@@ -36,9 +37,11 @@
         <div class="p-1 mb-1">
             <h2 class="text-center">{{profile_user.user_name}}</h2>
         </div>
+
         <div class="p-1 mb-1">
             <p class="text-center">{{profile_user.first_name}} {{profile_user.last_name}}<p>
         </div>
+
         <div class="p-1 mb-1">
             <p class="text-center">{{profile_user.about}}<p>
         </div>
@@ -49,18 +52,33 @@
         <h4 class="centered">Blogs</h4>
     </div>
 
-    {% for blog in profile_user_blogs %}
-        <ul>
-            <a href="{% url 'blog:entries_list' blog.id %}">{{blog}}</a>
-        </ul>
-    {% empty %}
-        {% if profile_user == request.user %}
-            <ul>Aún no has publicado ningún blog</ul>
-        {% else %}
-            <ul>Este usuario aún no ha publicado ningún blog</ul>
-        {% endif %}
-    {% endfor %}
-        
+    <div class="left-row">
+        {% for blog in profile_user_blogs %}
+            <div class="card shadowed m-2 block centered" style="width: 18rem;">
+                <img src="{{blog.banner_url}}" class="card-img-top" alt="Blog banner">
+                <a href="{% url 'blog:entries_list' blog.id %}" class="stretched-link"></a>
+
+                <div class="card-body">
+                    
+                    <h5 class="card-title"><strong>{{ blog.text }}</strong></h5>
+                    
+                    <p class="card-text">
+                        {{ blog.about | truncatechars:80 }}
+                    </p>
+                
+                    <div class="left-row ms-auto">
+                        <a href="{% url 'accounts:user_profile' blog.author.id %}">
+                            <img src="{{ blog.author.avatar_small }}">
+                        </a>
+
+                        <p class="text-muted"><small>{{ blog.date_added | custom_time_since }}</small></p>
+                    </div>
+                </div>
+            </div>
+        {%empty%}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+            <p>Aún no has creado ningún blog </p>
+        {% endfor %}
+    </div>     
 </div>
 
 {% if request.user.is_authenticated %}

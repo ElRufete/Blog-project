@@ -13,26 +13,26 @@
             {% if user_blogs %}
                 <div class="left-row">
                     {% for blog in user_blogs %}
-
-                    
                         <div class="card shadowed m-4 block" style="width: 18rem;">
                             <img src="{{blog.banner_url}}" class="card-img-top" alt="Blog banner">
-                            <div class="card-body">
-                                <h5 class="card-title"><strong>{{ blog.text }}</strong></h5>
-                                
-                                <p class="card-text">
-                                    {{ blog.about | truncatechars:80 }}
-                                </p>
-                                <a href="{% url 'blog:entries_list' blog.id %}" class="stretched-link"></a>
-                                <div class="column-footer">
-                                <div class="left-row">
-                                    <a href="{% url 'accounts:user_profile' blog.author.id %}">
-                                        <img src="{{ blog.author.avatar_small }}">
-                                    </a>
+                                <div class="card-body">
+                                    <h5 class="card-title"><strong>{{ blog.text }}</strong></h5>
+                                    
+                                    <p class="card-text">
+                                        {{ blog.about | truncatechars:80 }}
+                                    </p>
 
-                                    <p class="text-muted"><small>{{ blog.date_added | custom_time_since }}</small></p>
+                                    <a href="{% url 'blog:entries_list' blog.id %}" class="stretched-link"></a>
+
+                                    <div class="column-footer">
+                                        <div class="left-row">
+                                            <a href="{% url 'accounts:user_profile' blog.author.id %}">
+                                                <img src="{{ blog.author.avatar_small }}">
+                                            </a>
+
+                                        <p class="text-muted"><small>{{ blog.date_added | custom_time_since }}</small></p>
+                                    </div>
                                 </div>
-                            </div>
                             </div>
                         </div>
                     

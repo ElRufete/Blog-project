@@ -17,74 +17,68 @@
     
 </head>
 <body>
-    <nav class="navbar navbar-expand-md navbar-dark navbar-style">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
-            data-bs-target="#navbarCollapse" aria-controlls="navbarCollapse" 
-            aria-expanded="false" aria-label="toggle-navigation">
-                <span class="navbar-toggler-icon me-auto"></span>
-            </button>
-            <div class="collapse navbar-collapse ms-auto" id="navbarCollapse">
-                <ul class="navbar-nav me-auto mb-md-0">
-                    <li class="nav-item"> 
-                        <a href="{% url 'blog:home' %}">Portada</a>
-                    </li>
-                        <span class="d-none d-md-inline">|</span>
-                    <li class="nav-item">
-                        <a href="{% url 'blog:blogs_list' %}">Blogs</a>
-                        <span class="d-none d-md-inline">|</span></li>
-                </ul>
-                <ul class="navbar-nav ms-auto mb-2 mb-md-0 pt-0 align-items-md-center">
-                {% if request.user.is_authenticated %}
-                    {% if request.user.first_name %}
-                        <div class="greeting">
-                            <li class="nav-item d-none d-md-inline">¡Hola,<a 
-                                href="{% url 'accounts:user_profile' request.user.id %}">{{ request.user.first_name }}</a>!</li>
-                            <span class="d-none d-md-inline">|</span>
-                        </div>
-                    {% else %}
-                        <div class="greeting">
-                            <li class=" nav-item d-none d-md-inline ">¡Hola,<a 
-                                href="{% url 'accounts:user_profile' request.user.id %}">
-                                {{ request.user.user_name }}</a>!</li>
-                            <span class="d-none d-md-inline">|</span>
-                        </div>
-                    {% endif %}
-                    <li class="nav-item"> 
-                        <a href="{% url 'friends:friends_page' %}">Amigos</a>
-                    </li>
-                    <span class="d-none d-md-inline">|</span>
-                    <li class="nav-item"> 
-                    <form action="{% url 'notifications:activity' %}" 
-                    method="post" class="position-relative">
-                        {% csrf_token %}
-                        <button type="submit" class="logout-button nav-item">Actividad</button>
-                        {% if unread_notifications_counter > 0 %}
-                        <span class="position-absolute top-0 start-100 translate-middle 
-                        badge rounded-pill bg-primary">
-                        {{ unread_notifications_display }}
-                            <span class="visually-hidden">Nuevas notificaciones</span>
-                        </span>
-                        {% endif %}
-                    </form>
-                    </li>
-                    <span class="d-none d-md-inline">|</span>
-                    <form action="{% url 'accounts:logout' %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit" class="logout-button nav-item">Cerrar sesión</button>
-                    </form>
-                {% else %}
-                    <li class="nav-item">
-                    <a href="{% url 'accounts:login' %}">Acceder</a> 
-                    <span class="d-none d-md-inline">|</span></li>
-                    <li class="nav-item">
-                    <a href="{% url 'accounts:register' %}">Registrarse</a> </li>
-                {% endif %}
+    <nav class="navbar navbar-expand-md bg-light">
+    <div class="container-fluid d-flex align-items-center">
 
-                </ul>
-            </div>  
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu" 
+    aria-controls="navbarMenut" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarMenu">
+      <ul class="navbar-nav me-auto mb-2 mb-md-0">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="{% url 'blog:home' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'blog:blogs_list' %}">Blogs</a>
+        </li>
+      </ul>
+    </div>
+    
+     
+      <div class="navbar-right ms-auto d-flex align-items-center gap-2">
+        {% if request.user.is_authenticated %}
+          {% if request.user.first_name %}
+            <p class="nav-item ms-2">
+              <span class="navbar-text align-middle">¡Hola, {{request.user.first_name}}!</span>
+            </p>
+          {% else %}
+            <p class="nav-item ms-2">
+              <span class="navbar-text">¡Hola, {{request.user.user_name}}!</span>
+            </p>
+          {% endif %}
+
+        <div class="dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="{{request.user.avatar_small}}">
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'accounts:user_profile' request.user.id %}">Perfil</a></li>
+            <li><a class="dropdown-item" href="{% url 'notifications:activity' %}">Actividad</a></li>
+            <li><a class="dropdown-item" href="{% url 'friends:friends_page' %}">Amigos</a></li>
+            <li><a class="dropdown-item" href="{% url 'collaborators:collab_requests_page' %}">Colaboradores</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <form action="{% url 'accounts:logout' %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="dropdown-item">Cerrar sesión</button>
+            </form>
+          </ul>
         </div>
-    </nav>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="{% url 'accounts:login' %}">Iniciar sesión</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'accounts:register' %}">Registrarse</a>
+        </li>
+        {% endif %}
+      </div>
+      
+    </div>
+  
+</nav>
     {% block page_header %} {% endblock page_header %}
     {% block content%} {% endblock content%}
 </body>
