@@ -11,38 +11,49 @@
                 <a href="{% url 'blog:blogs_list' %}">&laquo; Atrás </a>
             </p>
         </div>
-        
-        {% if blog.author == request.user or entry.author == request.user %}
-            <div class="column-right">
-                <button class="btn btn-primary mt-3 mb-3" type="button" data-bs-toggle="collapse" 
-                data-bs-target="#collapseOptions" aria-expanded="false" 
-                aria-controls="collapseOptions">
-                    <strong>...</strong>
-                </button>
-            </div> 
-        {% endif %}
     </div>
 
-    <div class="collapse" id="collapseOptions">
-        <div class="card card-body ms-auto">
-            {% if entry.author == request.user %}
-                <div class="pb-2">
-                    <div>
-                        <a href="{% url 'blog:edit_entry' entry.id %}"> Editar </a>
+    {% if blog.author == request.user or entry.author == request.user %}
+
+            <div class="btn-group ms-auto">
+                <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <strong> . . . </strong></button>
+                
+                {% if entry.author == request.user %}
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'blog:edit_entry' entry.id %}">Editar</a></li>
+                    {% if blog.author == request.user or entry.author == request.user %}
+                        <li><hr class="dropdown-divider"></li>
+                        <li><button type="button" class="dropdown-item bg-danger" style="color:white" 
+                            data-bs-toggle="modal" data-bs-target="#deleteEntryModal">
+                            Eliminar </button></li> 
+                    {% endif %}    
+                    </ul>
+                {% endif %}
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="deleteEntryModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="modalLabel">¿Eliminar entrada?</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Estás a punto de eliminar esta entrada del blog. ¿Estás seguro?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Atrás</button>
+                            <form action="{% url 'blog:delete_entry' entry.id %}" method="POST">
+                                                {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            {% endif %} 
-
-            {% if blog.author == request.user or entry.author == request.user %}
-                <div class="pb-2">
-                    <form action="{% url 'blog:delete_entry' entry.id %}" method="POST">
-                            {% csrf_token %}
-                            <button type="submit" class="logout-button">🗑️ Eliminar</button>
-                    </form>
-                </div>
-            {% endif %}
-        </div>
-    </div>
+            </div>
+    {% endif %}
 
     <div class="pb-3 border-bottom centered">
         <h2><strong>{{ entry.title }}</strong></h2>

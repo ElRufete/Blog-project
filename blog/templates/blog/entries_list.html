@@ -30,19 +30,36 @@
                         <li><a class="dropdown-item" href="{% url 'collaborators:add_collab_page' blog.id %}">Añadir colaborador</a></li>
                         <li><a class="dropdown-item" href="{% url 'collaborators:remove_collab_page' blog.id %}">Eliminar colaborador</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><form action="{% url 'blog:delete_blog' blog.id %}" method="POST">
-                            {% csrf_token %}
-                            <button type="submit" class="dropdown-item bg-danger" style="color:white">Eliminar</button>
-                        </form></li>
+                        <li><button type="button" class="dropdown-item bg-danger" style="color:white" 
+                            data-bs-toggle="modal" data-bs-target="#deleteBlogModal">
+                            Eliminar </button></li>     
                     </ul>
                 {% endif %}
             </div>
-                
+
+            <!-- Modal -->
+            <div class="modal fade" id="deleteBlogModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalLabel">¿Eliminar blog?</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Se eliminarán el blog y todas sus entradas, incluyendo las de colaboradores. ¿Continuar?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Atrás</button>
+                    <form action="{% url 'blog:delete_blog' blog.id %}" method="POST">
+                                        {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
+                </div>
+                </div>
+            </div>
+            </div>
             {% endif %}
-        
-
-        
-
+            
         
     <div class="border-bottom pb-3 mt-3">
         <div class="centered">
