@@ -7,58 +7,44 @@
 <title>Home</title>
 {% block content%}
     <div class="blackboard">
-        <div class="friends-row">
+        <div class="friends-row mt-2">
             <div>
-                <p class="me-auto p-2 blog-options">
+                <p class="me-auto blog-options">
                     <a href="{% url 'blog:blogs_list' %}">&laquo; Atrás </a>
                 </p>
             </div>
-            {% if blog.author == request.user or request.user in blog_collabs %}
-                <div class="column-right">
-                    <button class="btn btn-primary mt-3 mb-3" type="button" data-bs-toggle="collapse" 
-                    data-bs-target="#collapseOptions" aria-expanded="false" 
-                    aria-controls="collapseExample">
-                        <strong>...</strong>
-                    </button>
-                </div> 
-            {% endif %}
         </div>
+            {% if blog.author == request.user or request.user in blog_collabs %}
 
-        <div class="collapse" id="collapseOptions">
-            <div class="card card-body ms-auto">
-                {% if blog.author == request.user or request.user in blog_collabs %}
-                    <div class="pb-2">
-                        <div>
-                            <a href="{% url 'blog:new_entry' blog.id %}"> Nueva Entrada </a>
-                        </div>
-                    </div>
-                {% endif %} 
-
+            <div class="btn-group ms-auto">
+                <form action="{% url 'blog:new_entry' blog.id %}">
+                <button type="submit" class="btn btn-primary btn-sm">Nueva entrada</button>
+                </form>
                 {% if blog.author == request.user %}
-                    <div class="pb-2">
-                        <a href="{% url 'collaborators:add_collab_page' blog.id %}"> 
-                            Añadir colaborador </a>
-                    </div>
-                    
-                    <div class="pb-2">
-                        <a href="{% url 'collaborators:remove_collab_page' blog.id %}"> 
-                            Eliminar colaborador </a>
-                    </div>
-                    <div class="pb-2">
-
-                        <a href="{% url 'blog:edit_blog' blog.id %}"> Editar </a> 
-                    </div>
-
-                    <div class="pb-2 ">
-                        <form action="{% url 'blog:delete_blog' blog.id %}" method="POST">
+                    <button type="button" class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                        <span class="visually-hidden">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'blog:edit_blog' blog.id %}">Editar</a></li>
+                        <li><a class="dropdown-item" href="{% url 'collaborators:add_collab_page' blog.id %}">Añadir colaborador</a></li>
+                        <li><a class="dropdown-item" href="{% url 'collaborators:remove_collab_page' blog.id %}">Eliminar colaborador</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><form action="{% url 'blog:delete_blog' blog.id %}" method="POST">
                             {% csrf_token %}
-                            <button type="submit" class="logout-button push-up">🗑️ Eliminar</button>
-                        </form>
-                    </div>
+                            <button type="submit" class="dropdown-item bg-danger" style="color:white">Eliminar</button>
+                        </form></li>
+                    </ul>
                 {% endif %}
             </div>
-        </div>
-    <div class="border-bottom pb-3">
+                
+            {% endif %}
+        
+
+        
+
+        
+    <div class="border-bottom pb-3 mt-3">
         <div class="centered">
 
             <h2><strong> {{ blog.text }} </strong></h2>
@@ -73,14 +59,6 @@
                         {{ blog.author }}</a>{{ blog.date_added | custom_time_since}}</small>
                 </p>
             </div>
-            
-            {% if blog.author == request.user or request.user in blog_collabs %}
-                <div class="blog-options pb-3 pt-3">
-                    <div>
-                        <a href="{% url 'blog:new_entry' blog.id %}"> Nueva Entrada </a>  
-                    </div>
-                </div>
-            {% endif %}
         </div>
 
         <div class="friends-button" id="accordionFlush">

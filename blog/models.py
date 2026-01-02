@@ -31,7 +31,7 @@ class Entry(models.Model):
         verbose_name_plural = 'Entries'
 
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
-    title = models.CharField(max_length=50, default= 'Nueva entrada')
+    title = models.CharField(max_length=50)
     text = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, on_delete=(models.CASCADE), related_name="collab_entries")
