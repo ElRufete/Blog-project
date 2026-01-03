@@ -69,7 +69,9 @@
             <p>{{blog.about}}</p>
 
             <div class="centered-row">
-                <img class="push-up me-2" src='{{ blog.author.avatar_medium }}'>
+                <a href="{% url 'accounts:user_profile' blog.author.id %}">
+                    <img class="push-up me-2" src='{{ blog.author.avatar_medium }}'>
+                </a>
                 
                 <p class="message-link text-muted">
                     <small>Creado por<a href="{% url 'accounts:user_profile' blog.author.id %}">

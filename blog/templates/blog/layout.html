@@ -17,7 +17,7 @@
     
 </head>
 <body>
-    <nav class="navbar navbar-expand-md bg-light">
+    <nav class="navbar navbar-expand-md bg-light sticky-top">
     <div class="container-fluid d-flex align-items-center">
 
 
@@ -51,12 +51,22 @@
           {% endif %}
 
         <div class="dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link dropdown-toggle position-relative" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <img src="{{request.user.avatar_small}}">
+            {% if unread_notifications_counter > 0 %}
+              <span class="position-absolute top-10 start-45 translate-middle p-2 bg-primary border border-light rounded-circle">
+                <span class="visually-hidden">New alerts</span>
+              </span>
+            {% endif %}
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="{% url 'accounts:user_profile' request.user.id %}">Perfil</a></li>
-            <li><a class="dropdown-item" href="{% url 'notifications:activity' %}">Actividad</a></li>
+            <li><a class="dropdown-item d-flex align-items-center justify-content-between" 
+              href="{% url 'notifications:activity' %}">Actividad
+            {% if unread_notifications_counter > 0 %}
+              <span class="badge text-bg-primary rounded-pill">{{ unread_notifications_display }}</span>
+            {% endif %}
+            </a></li>
             <li><a class="dropdown-item" href="{% url 'friends:friends_page' %}">Amigos</a></li>
             <li><a class="dropdown-item" href="{% url 'collaborators:collab_requests_page' %}">Colaboradores</a></li>
             <li><hr class="dropdown-divider"></li>

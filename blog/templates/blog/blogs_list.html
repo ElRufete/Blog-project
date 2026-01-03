@@ -61,7 +61,7 @@
                             
                                 <a href="{% url 'blog:entries_list' blog.id %}" class="stretched-link"></a>
 
-                                <div class="left-row">
+                                <div class="left-row card-footer">
                                     <a href="{% url 'accounts:user_profile' blog.author.id %}">
                                         <img src="{{ blog.author.avatar_small }}">
                                     </a>
@@ -82,6 +82,7 @@
 
                 <div class="left-row">
                     {% for blog in friends_blogs %}
+                    {% if blog not in collaborating_blogs %}
 
                     
                         <div class="card block shadowed m-4" style="width: 18rem;">
@@ -93,7 +94,7 @@
                             
                                 <a href="{% url 'blog:entries_list' blog.id %}" class="stretched-link"></a>
 
-                                <div class="left-row">
+                                <div class="left-row card-footer">
                                     <a href="{% url 'accounts:user_profile' blog.author.id %}">
                                         <img src="{{ blog.author.avatar_small }}">
                                     </a>
@@ -103,12 +104,13 @@
                             </div>
                         </div>
                     
-
+                    {% endif %}
                     {%empty%}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
                         <p>Aún no has creado ningún blog </p>
                     
                     {% endfor %}
                 </div>
+            
             {% endif %}
         {% endif %}
 
@@ -142,7 +144,7 @@
                     
 
                     {%empty%}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
-                        <p>Aún no has creado ningún blog </p>
+                        <p>No hay blogs en esta categoría </p>
                     
                     {% endfor %}
                 </div>
@@ -160,7 +162,7 @@
                             
                                 <a href="{% url 'blog:entries_list' blog.id %}" class="stretched-link"></a>
 
-                                <div class="left-row">
+                                <div class="left-row card-footer">
                                     <a href="{% url 'accounts:user_profile' blog.author.id %}">
                                         <img src="{{ blog.author.avatar_small }}">
                                     </a>
@@ -172,7 +174,7 @@
                     
 
                     {%empty%}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
-                        <p>Aún no has creado ningún blog </p>
+                        <p>Aún no se ha creado ningún blog </p>
                     
                     {% endfor %}
                 </div>

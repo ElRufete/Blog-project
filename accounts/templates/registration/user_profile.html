@@ -54,7 +54,7 @@
 
     <div class="left-row">
         {% for blog in profile_user_blogs %}
-            <div class="card shadowed m-2 block centered" style="width: 18rem;">
+            <div class="card shadowed m-2 block" style="width: 18rem;">
                 <img src="{{blog.banner_url}}" class="card-img-top" alt="Blog banner">
                 <a href="{% url 'blog:entries_list' blog.id %}" class="stretched-link"></a>
 
@@ -65,15 +65,16 @@
                     <p class="card-text">
                         {{ blog.about | truncatechars:80 }}
                     </p>
-                
-                    <div class="left-row ms-auto">
-                        <a href="{% url 'accounts:user_profile' blog.author.id %}">
-                            <img src="{{ blog.author.avatar_small }}">
-                        </a>
-
-                        <p class="text-muted"><small>{{ blog.date_added | custom_time_since }}</small></p>
-                    </div>
                 </div>
+
+                <div class="left-row  card-footer">
+                    <a href="{% url 'accounts:user_profile' blog.author.id %}">
+                        <img src="{{ blog.author.avatar_small }}">
+                    </a>
+
+                    <p class="text-muted"><small>{{ blog.date_added | custom_time_since }}</small></p>
+                </div>
+                
             </div>
         {%empty%}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
             <p>Aún no has creado ningún blog </p>
