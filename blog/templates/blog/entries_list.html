@@ -108,15 +108,27 @@
     </div>
     
     <h3 class="centered">Entradas</h3>
-    <ul class="list-group pb-3 mb-4 border-bottom">
+    <div class="left-row m-4 border-bottom">
         {% for entry in entries %}
-            <li class="list-group-item">
-            <div class="left-row">
-                <img class="push-up me-3" src="{{ entry.author.avatar_small }}">
-                <a href="{% url 'blog:entry' blog.id entry.id %}">{{entry.title}}</a> 
+        <div class="card shadowed m-4 block" style="width: 18rem;">
+        
+            {% if entry.banner %}
+                <img src="{{entry.banner.url}}" class="card-img-top" alt="entry card banner">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title"><strong>{{ entry.title }}</strong></h5>
+                
+            
             </div>
-                <p class="text-muted"><small>({{entry.author}}, {{entry.date_added | custom_time_since}})</small></p>
-            </li>
+            <a href="{% url 'blog:entry' blog.id entry.id %}" class="stretched-link"></a>
+            <div class="left-row card-footer">
+                <a href="{% url 'accounts:user_profile' blog.author.id %}">
+                    <img src="{{ entry.author.avatar_small }}">
+                </a>
+
+                <p class="text-muted"><small>{{ entry.date_added | custom_time_since }}</small></p>
+            </div>
+        </div>
         {%empty%}
             {% if request.user == blog.author %}
                 <li>Aún no hay entradas para este tema. 
@@ -125,6 +137,6 @@
                 <li>Aún no hay entradas para este tema.</li>
             {% endif %}
         {% endfor %}   
-    </ul>
+    </div>
 </div>
 {%endblock content%}
