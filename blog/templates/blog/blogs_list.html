@@ -15,28 +15,23 @@
                     {% for blog in user_blogs %}
                         <div class="card shadowed m-4 block" style="width: 18rem;">
                             <img src="{{blog.banner_url}}" class="card-img-top" alt="Blog banner">
-                                <div class="card-body">
-                                    <h5 class="card-title"><strong>{{ blog.text }}</strong></h5>
-                                    
-                                    <p class="card-text">
-                                        {{ blog.about | truncatechars:80 }}
-                                    </p>
+                            <div class="card-body">
+                                <h5 class="card-title"><strong>{{ blog.text }}</strong></h5>
+                                
+                                <p class="card-text">
+                                    {{ blog.about | truncatechars:80 }}
+                                </p>
+                            </div>
+                                <a href="{% url 'blog:entries_list' blog.id %}" class="stretched-link"></a>
+                                <div class="left-row card-footer">
+                                    <a href="{% url 'accounts:user_profile' blog.author.id %}">
+                                        <img src="{{ blog.author.avatar_small }}">
+                                    </a>
 
-                                    <a href="{% url 'blog:entries_list' blog.id %}" class="stretched-link"></a>
-
-                                    <div class="column-footer">
-                                        <div class="left-row">
-                                            <a href="{% url 'accounts:user_profile' blog.author.id %}">
-                                                <img src="{{ blog.author.avatar_small }}">
-                                            </a>
-
-                                        <p class="text-muted"><small>{{ blog.date_added | custom_time_since }}</small></p>
-                                    </div>
-                                </div>
+                                <p class="text-muted"><small>{{ blog.date_added | custom_time_since }}</small></p>
                             </div>
                         </div>
-                    
-
+                
                     {%empty%}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
                         <p>Aún no has creado ningún blog </p>
                     
@@ -60,15 +55,14 @@
                                 <p class="card-text">{{ blog.about | truncatechars:80 }}</p>
                             
                                 <a href="{% url 'blog:entries_list' blog.id %}" class="stretched-link"></a>
-
-                                <div class="left-row card-footer">
-                                    <a href="{% url 'accounts:user_profile' blog.author.id %}">
-                                        <img src="{{ blog.author.avatar_small }}">
-                                    </a>
-
-                                    <p class="text-muted"><small>{{ blog.date_added | custom_time_since }}</small></p>
-                                </div>
                             </div>
+                            <div class="left-row card-footer">
+                                <a href="{% url 'accounts:user_profile' blog.author.id %}">
+                                    <img src="{{ blog.author.avatar_small }}">
+                                </a>
+                                <p class="text-muted"><small>{{ blog.date_added | custom_time_since }}</small></p>
+                            </div>
+                            
                         </div>
                     
                     {% endfor %}
@@ -93,15 +87,16 @@
                                 <p class="card-text">{{ blog.about | truncatechars:80 }}</p>
                             
                                 <a href="{% url 'blog:entries_list' blog.id %}" class="stretched-link"></a>
-
-                                <div class="left-row card-footer">
-                                    <a href="{% url 'accounts:user_profile' blog.author.id %}">
-                                        <img src="{{ blog.author.avatar_small }}">
-                                    </a>
-
-                                    <p class="text-muted"><small>{{ blog.date_added | custom_time_since }}</small></p>
-                                </div>
                             </div>
+
+                            <div class="left-row card-footer">
+                                <a href="{% url 'accounts:user_profile' blog.author.id %}">
+                                    <img src="{{ blog.author.avatar_small }}">
+                                </a>
+
+                                <p class="text-muted"><small>{{ blog.date_added | custom_time_since }}</small></p>
+                            </div>
+                            
                         </div>
                     
                     {% endif %}
@@ -122,7 +117,6 @@
                 <div class="left-row">
                     {% for blog in other_blogs %}
 
-                    
                         <div class="card block shadowed m-4" style="width: 18rem;">
                             <img src="{{blog.banner_url}}" class="card-img-top" alt="Blog banner">
                             <div class="card-body">
@@ -131,15 +125,15 @@
                                 <p class="card-text">{{ blog.about | truncatechars:80 }}</p>
                             
                                 <a href="{% url 'blog:entries_list' blog.id %}" class="stretched-link"></a>
-
-                                <div class="left-row">
-                                    <a href="{% url 'accounts:user_profile' blog.author.id %}">
-                                        <img src="{{ blog.author.avatar_small }}">
-                                    </a>
-
-                                    <p class="text-muted"><small>{{ blog.date_added | custom_time_since }}</small></p>
-                                </div>
                             </div>
+                            <div class="left-row card-footer">
+                                <a href="{% url 'accounts:user_profile' blog.author.id %}">
+                                    <img src="{{ blog.author.avatar_small }}">
+                                </a>
+
+                                <p class="text-muted"><small>{{ blog.date_added | custom_time_since }}</small></p>
+                            </div>
+                            
                         </div>
                     
 
@@ -152,7 +146,6 @@
                 <div class="left-row">
                     {% for blog in blogs %}
 
-                    
                         <div class="card block shadowed m-4" style="width: 18rem;">
                             <img src="{{blog.banner_url}}" class="card-img-top" alt="Blog banner">
                             <div class="card-body">
@@ -161,18 +154,18 @@
                                 <p class="card-text">{{ blog.about | truncatechars:80 }}</p>
                             
                                 <a href="{% url 'blog:entries_list' blog.id %}" class="stretched-link"></a>
-
-                                <div class="left-row card-footer">
-                                    <a href="{% url 'accounts:user_profile' blog.author.id %}">
-                                        <img src="{{ blog.author.avatar_small }}">
-                                    </a>
-
-                                    <p class="text-muted"><small>{{ blog.date_added | custom_time_since }}</small></p>
-                                </div>
                             </div>
+
+                            <div class="left-row card-footer">
+                                <a href="{% url 'accounts:user_profile' blog.author.id %}">
+                                    <img src="{{ blog.author.avatar_small }}">
+                                </a>
+
+                                <p class="text-muted"><small>{{ blog.date_added | custom_time_since }}</small></p>
+                            </div>
+                            
                         </div>
                     
-
                     {%empty%}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
                         <p>Aún no se ha creado ningún blog </p>
                     

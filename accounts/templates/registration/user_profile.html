@@ -67,11 +67,10 @@
                     </p>
                 </div>
 
-                <div class="left-row  card-footer">
+                <div class="left-row card-footer">
                     <a href="{% url 'accounts:user_profile' blog.author.id %}">
                         <img src="{{ blog.author.avatar_small }}">
                     </a>
-
                     <p class="text-muted"><small>{{ blog.date_added | custom_time_since }}</small></p>
                 </div>
                 
