@@ -44,7 +44,7 @@ a:hover{
 .blackboard{
     display: flex;
     flex-direction: column;
-    background-color: beige;
+    background-color: #f6f1eb;
     font-family:'Arial', 'Comic Sans', 'Chalkboard SE';
     border: solid 0.1rem darkgray;
     box-shadow: 0 0.4rem 0.9rem 0 rgba(0, 0, 0, 0.4);

@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'friends',
     'collaborators',
     'notifications',
+    'emails',
    
     # Django apps
     'django.contrib.admin',
@@ -144,8 +145,16 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 #Email backend settings
+EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = 'raulcanterolm@gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 
-
+#default storage
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
