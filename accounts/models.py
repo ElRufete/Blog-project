@@ -44,7 +44,7 @@ class NewUser(AbstractBaseUser, PermissionsMixin):
     about = models.TextField(_("about"), max_length=500, blank=True)
     avatar = CloudinaryField('avatar', blank=True, null=True)
     is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=False)
 
     objects = CustomAccountManager()
 
@@ -77,9 +77,6 @@ class NewUser(AbstractBaseUser, PermissionsMixin):
     @property
     def avatar_large(self):
         return self.avatar_url(size=128)
-    
-  
-    
     
     def __str__(self):
         return self.user_name

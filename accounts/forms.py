@@ -27,6 +27,11 @@ class EditProfileForm(forms.ModelForm):
         labels = {'about': 'Algo sobre ti', 'first_name': 'Nombre', 'last_name':'Apellidos', 'avatar':'Imagen de perfil'}
         widgets = {'about': forms.Textarea(attrs={'cols':80, 'rows':10})}
 
+class EmailCheckForm(forms.Form):
+    email = forms.EmailField(
+        label='Introduce tu correo',
+        max_length=254 )
+
     
 
     

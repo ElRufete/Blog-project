@@ -9,16 +9,16 @@
 {% block content %}
 
 {%  if messages %}
-        <div>
-            {% for message in messages %}
-                {% if 'friends' in message.tags %}
-                    <div class="alert alert-{{ message.level_tag }}">
-                        {{message}}
-                    </div>
-                {% endif %}    
-            {% endfor %}
-        </div>
-    {% endif %}
+    <div>
+        {% for message in messages %}
+            {% if 'friends' in message.tags %}
+                <div class="alert alert-{{ message.level_tag }}">
+                    {{message}}
+                </div>
+            {% endif %}    
+        {% endfor %}
+    </div>
+{% endif %}
 
 <div class="p-3 mb-4 blackboard">
     {% if request.user.is_authenticated %}

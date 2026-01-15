@@ -6,7 +6,15 @@
 
 <body>
 {% block page_header %}
-
+     {%  if messages %}
+        <div>
+            {% for message in messages %}
+                    <div class="alert alert-{{ message.level_tag }}">
+                        {{message}}
+                    </div>
+            {% endfor %}
+        </div>
+    {% endif %}
     <div class="p-3 mb-1 blackboard adjusted centered">
         <h2 class="text-center">Inicia sesión en tu cuenta</h2>
     </div>
@@ -21,13 +29,17 @@
                 {% bootstrap_button button_type="submit" content="Entrar" %}
             </form>
         </div>
+    
         <div class="message-link">
             <p><small>¿Aún no tienes una cuenta?</small></p>
             <a class="push-up" href="{% url 'accounts:register' %}">¡Regístrate!</a>
+            <p><small>¿Olvidaste tu contraseña?</small></p>
+            <a class="push-up" href="{% url 'accounts:password_reset_request' %}">Restablecer contraseña</a>
         </div>
     </div>
     
-    </div>
+    
+    
 {% endblock content%}
 
 </body>

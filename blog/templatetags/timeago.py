@@ -17,10 +17,12 @@ def custom_time_since(since_date):
     days = hours // 24
     weeks = days // 7
     months = days // 30
+    if months < 1:
+        months = 1
     years = days // 365
 
     if seconds < 60:
-        return f"hace menos de un minuto"
+        return f"Ahora mismo"
     
     if minutes < 60:
         return f'hace {minutes} min'
@@ -31,7 +33,7 @@ def custom_time_since(since_date):
     if days < 7:
         return f'hace {days} d'
     
-    if weeks < 4:
+    if weeks <= 4:
         return f'hace {weeks} sem'
     
     if months < 12:

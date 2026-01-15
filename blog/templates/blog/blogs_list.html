@@ -4,6 +4,19 @@
     <title>Home</title>
 
 {% block content%}
+
+    {%  if messages %}
+        <div>
+            {% for message in messages %}
+                {% if 'accounts' in message.tags %}
+                    <div class="alert alert-{{ message.level_tag }}">
+                        {{message}}
+                    </div>
+                {% endif %}    
+            {% endfor %}
+        </div>
+    {% endif %}
+
     <div class="blackboard">
         {% if request.user.is_authenticated %}
             <div class="text-center pb-3">

@@ -85,6 +85,8 @@ def entry(request,blog_id,entry_id):
 
 @login_required
 def new_blog(request):
+    if not request.user.is_active:
+        raise Http404
     if request.method != 'POST':
         form = BlogForm()
     else:
