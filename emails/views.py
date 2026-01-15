@@ -19,7 +19,6 @@ def get_sendgrid_client():
     return sendgrid.SendGridAPIClient(api_key)
             
 
-
 def welcome_email(request, user):
     """Utility function to send a welcome email with an activation link, 
     pass the newly created user as argument."""
@@ -48,7 +47,6 @@ def welcome_email(request, user):
     sg.send(message)
     
 
-
 def reset_password_email(request, user):
     """Utility function to send an email with a reset password link,
     pass the user as argument"""
@@ -72,20 +70,10 @@ def reset_password_email(request, user):
         subject="Restablecimiento de contraseña",
         html_content=password_reset_email_html
     )
-    
-    try:
-        sg = get_sendgrid_client()
-        response = sg.send(message)
-        print("SENDGRID STATUS:", response.status_code)
-        print("SENDGRID BODY:", response.body)
-        print("SENDGRID HEADERS:", response.headers)
-    except Exception as e:
-        if hasattr(e, "body"):
-            print("SENDGRID BODY:", e.body)
-        if hasattr(e, "headers"):
-            print("SENDGRID HEADERS:", e.headers)
-        raise
-    
+
+    sg = get_sendgrid_client()
+    sg.send(message)
+        
 
 
     

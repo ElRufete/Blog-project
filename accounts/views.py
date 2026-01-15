@@ -114,7 +114,7 @@ def activate_account(request, uid_b64, token):
               )
         return redirect('blog:blogs_list')
     
-    messages.error(request, 'Algo ha fallado en la activación de tu cuenta.', extra_tags='accounts')
+    messages.error(request, 'El enlace de activación no es válido o ha expirado.', extra_tags='accounts')
     return redirect('blog:blogs_list')
 
 
