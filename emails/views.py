@@ -12,7 +12,7 @@ import os
 
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
-def get_sengrid_client():
+def get_sendgrid_client():
     api_key = os.environ.get('SENDGRID_API_KEY')
     if not api_key:
         raise RuntimeError("Undefined SENDGRID_API_KEY")
@@ -44,7 +44,7 @@ def welcome_email(request, user):
         html_content=welcome_email_html
     )
 
-    sg = get_sengrid_client()
+    sg = get_sendgrid_client()
     sg.send(message)
     
 
@@ -73,8 +73,15 @@ def reset_password_email(request, user):
         html_content=password_reset_email_html
     )
 
-    sg = get_sengrid_client()
-    sg.send(message)
+    try:
+        sg = get_sendgrid_client()
+        response = sg.send(message)
+        print("SENDGRID STATUS:", response.status_code)
+        print("SENDGRID BODY:", response.body)
+        print("SENDGRID HEADERS:", response.headers)
+    except Exception as e:
+        print("ERROR SENDGRID:", repr(e))
+        raise
     
 
 
