@@ -66,7 +66,7 @@ def reset_password_email(request, user):
 
     email.attach_alternative(password_reset_email_html,"text/html")
     print(f'enviando mail a {user.email}')
-    email.send(fail_silently=True)
+    email.send(fail_silently=False)
     
 
 

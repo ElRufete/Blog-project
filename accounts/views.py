@@ -11,6 +11,7 @@ from django.shortcuts import get_object_or_404
 from emails.tokens import UserActivationToken
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from emails.views import welcome_email, reset_password_email
+from www.settings import EMAIL_BACKEND, EMAIL_HOST
 
 from friends.models import FriendsList
 from blog.models import Blog
@@ -46,6 +47,8 @@ def login_view(request):
             return redirect("blog:blogs_list")
         else:
             messages.error(request, _("Nombre de usuario o contraseña no válidos."))
+    print(EMAIL_BACKEND)
+    print(EMAIL_HOST)
         
     context = {'form':form}
     return render(request,'registration/login.html', context)
