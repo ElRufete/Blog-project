@@ -72,7 +72,7 @@ def reset_password_email(request, user):
         subject="Restablecimiento de contraseña",
         html_content=password_reset_email_html
     )
-
+    
     try:
         sg = get_sendgrid_client()
         response = sg.send(message)
@@ -80,7 +80,10 @@ def reset_password_email(request, user):
         print("SENDGRID BODY:", response.body)
         print("SENDGRID HEADERS:", response.headers)
     except Exception as e:
-        print("ERROR SENDGRID:", repr(e))
+        if hasattr(e, "body"):
+            print("SENDGRID BODY:", e.body)
+        if hasattr(e, "headers"):
+            print("SENDGRID HEADERS:", e.headers)
         raise
     
 
