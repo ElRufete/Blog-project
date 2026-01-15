@@ -12,14 +12,18 @@ import os
 
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
-
+def get_sengrid_client():
+    api_key = os.environ.get('SENDGRID_API_KEY')
+    if not api_key:
+        raise RuntimeError("Undefined SENDGRID_API_KEY")
+    return sendgrid.SendGridAPIClient(api_key)
+            
 
 
 def welcome_email(request, user):
     """Utility function to send a welcome email with an activation link, 
     pass the newly created user as argument."""
-    
-    sg = sendgrid.SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+
     activate_token_generator = UserActivationToken()
     token = activate_token_generator.make_token(user)
     uid_b64 = urlsafe_base64_encode(force_bytes(user.pk))
@@ -39,7 +43,8 @@ def welcome_email(request, user):
         subject="Bienvenid@ a la blogoteca",
         html_content=welcome_email_html
     )
-    
+
+    sg = get_sengrid_client()
     sg.send(message)
     
 
@@ -48,7 +53,6 @@ def reset_password_email(request, user):
     """Utility function to send an email with a reset password link,
     pass the user as argument"""
 
-    sg = sendgrid.SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
     token_generator = PasswordResetTokenGenerator()
     token = token_generator.make_token(user)
     uid_b64 = urlsafe_base64_encode(force_bytes(user.pk))
@@ -68,7 +72,8 @@ def reset_password_email(request, user):
         subject="Restablecimiento de contraseña",
         html_content=password_reset_email_html
     )
-    
+
+    sg = get_sengrid_client()
     sg.send(message)
     
 
