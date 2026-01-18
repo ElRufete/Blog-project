@@ -2,6 +2,7 @@
 import dj_database_url
 import os
 from pathlib import Path
+from bleach.css_sanitizer import CSSSanitizer
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -168,6 +169,34 @@ TINYMCE_DEFAULT_CONFIG = {
     "branding": False,
     "image_uploadtab": True,
 }
+
+
+BLEACH_ALLOWED_TAGS = [
+    "p", "br",
+    "strong", "b", "em", "i", "u",
+    "ul", "ol", "li",
+    "a", "img", "span",
+]
+
+BLEACH_ALLOWED_ATTRIBUTES = {
+    "a": ["href", "title", "target", "rel"],
+    "img": ["src", "alt", "width", "height"],
+    "span": ["style"],
+    "p": ["style"],
+}
+
+BLEACH_ALLOWED_PROTOCOLS = ["http", "https"]
+
+BLEACH_CSS_SANITIZER = CSSSanitizer(
+    allowed_css_properties=[
+        "color",
+        "background-color",
+        "font-size",
+        "text-align",
+    ]
+)
+
+
 
 #default storage
 STORAGES = {

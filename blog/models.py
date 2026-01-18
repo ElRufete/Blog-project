@@ -1,7 +1,9 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+
 from cloudinary import CloudinaryImage
 from cloudinary.models import CloudinaryField
+
 
 
 User = get_user_model()
@@ -73,6 +75,7 @@ class Entry(models.Model):
             fetch_format='auto',
             quality='auto',
             )
+    
     
     def __str__(self):
         return self.title

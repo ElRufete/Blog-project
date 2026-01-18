@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
+from django.conf import settings
 from django.http import Http404
+import bleach
 
 
 from .models import Blog, Entry, EntryComment, CommentResponse
@@ -112,6 +114,7 @@ def new_entry(request, blog_id):
         if form.is_valid():
             new_entry = form.save(commit=False)
             new_entry.blog = blog
+            new_entry.text = clean_content(new_entry.text)
             new_entry.author = request.user
             new_entry.save()
             return redirect('blog:entries_list', blog.id)
@@ -130,7 +133,9 @@ def edit_entry(request, entry_id):
     else:
         form = EntryForm(instance=entry, data=request.POST, files=request.FILES)
         if form.is_valid():
-            form.save()
+            edited_entry= form.save(commit=False)
+            edited_entry.text = clean_content(edited_entry.text)
+            edited_entry.save()
             return redirect('blog:entry', blog.id, entry.id)
         
     context = {'entry':entry, 'blog':blog, 'form':form}
@@ -263,6 +268,16 @@ def check_author_or_collab(request, author, blog):
         pass
     else:
         raise Http404
+    
+def clean_content(html):
+        return bleach.clean(
+            html,
+            tags=settings.BLEACH_ALLOWED_TAGS,
+            attributes=settings.BLEACH_ALLOWED_ATTRIBUTES,
+            css_sanitizer=settings.BLEACH_CSS_SANITIZER,
+            strip=True,
+        )
+        
 
 
 
