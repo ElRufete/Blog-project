@@ -1,7 +1,9 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
+from tinymce.widgets import TinyMCE
 
 from .models import Blog, Entry, EntryComment, CommentResponse
+
 
 class BlogForm(forms.ModelForm):
     class Meta:
@@ -16,11 +18,24 @@ class BlogForm(forms.ModelForm):
         
 
 class EntryForm(forms.ModelForm):
+    text = forms.CharField(
+        widget=TinyMCE(
+            attrs={'rows': 30, 'cols': 80},
+            mce_attrs={
+                'upload_imagetab': True,
+                'paste_data_images': True,
+            }
+            )
+                           )
     class Meta:
         model = Entry
-        fields = ['title', 'text', 'banner']
-        labels = {'title': 'Título', 'text': '','banner': 'Agrega una imagen (opcional)',}
-        widgets = {'text': forms.Textarea(attrs={'cols':80, 'rows':16})}
+        fields = ['title', 'banner', 'text',]
+        labels = {
+            'title': 'Título', 
+            'text': '',
+            'banner': 'Imagen de portada',
+            }
+        widgets = { }
 
 class EntryCommentForm(forms.ModelForm):
     class Meta:

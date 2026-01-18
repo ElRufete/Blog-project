@@ -68,15 +68,9 @@
     </div>
     
     <div class="pt-4 pb-3 stretch-line border-bottom">
-        <p>{{ entry.text| linebreaksbr}}</p>
+        <p>{{ entry.text| safe}}</p>
     </div>
-    <div class="pt-4 pb-3">
-        {% if entry.banner %}
-            <img 
-            class="d-block mx-auto col-12 col-md-6 rounded shadowed"
-            src='{{ entry.banner.url }}'>
-        {% endif %}
-    </div> 
+   
 
     <div class= "blog-options p-2 pt-4 border-bottom" style="--bs-border-opacity: .5;">
         <div class="friends-button" id="accordionFlush">

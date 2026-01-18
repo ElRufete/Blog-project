@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django_bootstrap5',
     'cloudinary', 
     'cloudinary_storage',
+    'tinymce',
     
 ]
 
@@ -148,6 +149,25 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
 
+TINYMCE_DEFAULT_CONFIG = {
+    "height": 400,
+    "width": "100%",
+    "menubar": True,
+    "plugins": (
+        "advlist autolink lists link image charmap preview anchor "
+        "searchreplace visualblocks code fullscreen "
+        "insertdatetime media table help wordcount"
+    ),
+    "toolbar": (
+        "undo redo | formatselect | "
+        "bold italic underline | forecolor backcolor fontsize | "
+        "alignleft aligncenter alignright alignjustify | "
+        "bullist numlist outdent indent | "
+        "link image | code | help"
+    ),
+    "branding": False,
+    "image_uploadtab": True,
+}
 
 #default storage
 STORAGES = {
