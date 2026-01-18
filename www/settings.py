@@ -153,7 +153,7 @@ DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
 TINYMCE_DEFAULT_CONFIG = {
     "height": 400,
     "width": "100%",
-    "menubar": True,
+    "menubar": False,
     "plugins": (
         "advlist autolink lists link image charmap preview anchor "
         "searchreplace visualblocks code fullscreen "
