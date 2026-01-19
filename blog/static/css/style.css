@@ -40,11 +40,17 @@ a:hover{
     color: lightseagreen;
 }
 
+.entry-content img{
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
 
 .blackboard{
     display: flex;
     flex-direction: column;
-    background-color: #f6f1eb;
+    background-color: #f7f6f1;
     font-family:'Arial', 'Comic Sans', 'Chalkboard SE';
     border: solid 0.1rem darkgray;
     box-shadow: 0 0.4rem 0.9rem 0 rgba(0, 0, 0, 0.4);
@@ -54,6 +60,11 @@ a:hover{
     padding: 0 1.5rem;
     margin-left: 0.4rem;
     margin-right: 0.4rem;
+}
+@media (max-width: 798px){
+    .blackboard{
+        padding: 0;
+    }
 }
 .blog-card{
     display: flex;
@@ -405,4 +416,14 @@ a:hover{
     margin-left: auto;
     align-items: start;
     background-color: rgba(2, 7, 0, 0.158);
+}
+
+.flow-wid-75{
+    width: 75%;
+}
+
+@media (max-width: 767.98px){
+    .flow-wid-75{
+        width: 95%;
+    }
 }
