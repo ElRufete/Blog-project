@@ -5,7 +5,7 @@
 
 {% block page_header %}
 
-<div class="p-3 mb-1 blackboard centered text-center">
+<div class="px-1 px-md-4 py-4 d-flex flex-column centered">
         <h1> Editar Entrada </h1>
 </div>
 {% endblock page_header %}
@@ -13,8 +13,8 @@
 
 {% block content%}
 
-    <div class="p-3 mb-1 blackboard">
-        <div class="centered">
+    <div class="px-1 px-md-4 py-4 d-flex flex-column">
+        <div class="centered adjusted blackboard py-4">
             <form action="{% url 'blog:edit_entry' entry.id %}" method='post' enctype="multipart/form-data">
                     {% csrf_token %}
                     {% bootstrap_form form %}
@@ -27,12 +27,42 @@
                             width: "100%",
                             selector: "textarea",
                             plugins: "image link",
-                            menubar: false,
-                            toolbar: "undo redo | bold italic underline | forecolor backcolor fontsize | " + 
+                            menubar: true,
+                            toolbar: "undo redo | bold italic underline | forecolor backcolor | fontfamily fontsize | " + 
                                     "alignleft aligncenter alignright alignjustify | " +
                                     "bullist numlist outdent indent | image link | ",
 
+                            formats: {
+                                    alignleft: {selector: 'p', styles: {'text-align':'left'}},
+                                    aligncenter: {selector: 'p', styles: {'text-align':'center'}},
+                                    alignright: {selector: 'p', styles: {'text-align':'right'}}
+                                    },
+
+                            style_formats: [
+                                    {
+                                        title: 'Image Left',
+                                        selector: 'img',
+                                        styles: {
+                                            'float': 'left', 
+                                            'margin': '0 10px 0 10px'
+                                        }
+                                    },
+                                    {
+                                        title: 'Image Right',
+                                        selector: 'img', 
+                                        styles: {
+                                            'float': 'right', 
+                                            'margin': '0 0 10px 10px'
+                                        }
+                                    }
+                                ],
+
+                            
+                            extended_valid_elements: 'p[class|style],img[src|alt|width|height|class|style]',
+
+
                             paste_data_images: true,
+                            
                             
                             images_upload_handler: (blobInfo) => {
                                 return new Promise((resolve, reject) => {

@@ -6,7 +6,7 @@
 
 {% block page_header %}
 
-<div class="p-3 mb-1 blackboard centered text-center">
+<div class="px-1 px-md-4 py-4 d-flex flex-column centered">
         <h1> Nueva Entrada </h1>
 </div>
 {% endblock page_header %}
@@ -14,8 +14,8 @@
 
 {% block content%}
 
-    <div class="p-3 mb-1 blackboard">
-        <div class="centered">
+    <div class="px-1 px-md-4 py-4 d-flex flex-column">
+        <div class="centered blackboard adjusted py-4">
             <form action="{% url 'blog:new_entry' blog.id %}" method='POST' enctype="multipart/form-data">
                     {% csrf_token %}
                     {% bootstrap_form form %}
@@ -23,49 +23,77 @@
 
 
 
-<script>
-tinymce.init({
-    height: 400,
-    width: "100%",
-    selector: "textarea",
-    plugins: "image link",
-    menubar: false,
-    toolbar: "undo redo | bold italic underline | forecolor backcolor fontsize | " + 
-            "alignleft aligncenter alignright alignjustify | " +
-            "numlist outdent indent | image link | ",
-    paste_data_images: true,
-    
-    images_upload_handler: (blobInfo) => {
-        return new Promise((resolve, reject) => {
-            const xhr = new XMLHttpRequest();
-            const formData = new FormData();
+                    <script>
+                        tinymce.init({
+                            height: 400,
+                            width: "100%",
+                            selector: "textarea",
+                            plugins: "image link",
+                            menubar: true,
+                            toolbar: "undo redo | bold italic underline | forecolor backcolor | fontfamily fontsize | " + 
+                                    "alignleft aligncenter alignright alignjustify | " +
+                                    "bullist numlist outdent indent | image link | ",
 
-            xhr.open(
-                "POST",
-                "https://api.cloudinary.com/v1_1/drudyw2gl/image/upload",
-                true
-            );
+                            formats: {
+                                    alignleft: {selector: 'p', styles: {'text-align':'left'}},
+                                    aligncenter: {selector: 'p', styles: {'text-align':'center'}},
+                                    alignright: {selector: 'p', styles: {'text-align':'right'}}
+                                    },
 
-            xhr.onload = () => {
-                if (xhr.status !== 200) {
-                    reject(xhr.responseText);
-                    return;
-                }
+                            style_formats: [
+                                    {
+                                        title: 'Image Left',
+                                        selector: 'img',
+                                        styles: {
+                                            'float': 'left', 
+                                            'margin': '0 10px 0 10px'
+                                        }
+                                    },
+                                    {
+                                        title: 'Image Right',
+                                        selector: 'img', 
+                                        styles: {
+                                            'float': 'right', 
+                                            'margin': '0 0 10px 10px'
+                                        }
+                                    }
+                                ],
 
-                const json = JSON.parse(xhr.responseText);
-                resolve(json.secure_url);
-            };
+                            extended_valid_elements: 'p[class|style],img[src|alt|width|height|class|style]',
+                            paste_data_images: true,
+                            
+                            
+                            images_upload_handler: (blobInfo) => {
+                                return new Promise((resolve, reject) => {
+                                    const xhr = new XMLHttpRequest();
+                                    const formData = new FormData();
 
-            xhr.onerror = () => reject("Upload failed");
+                                    xhr.open(
+                                        "POST",
+                                        "https://api.cloudinary.com/v1_1/drudyw2gl/image/upload",
+                                        true
+                                    );
 
-            formData.append("file", blobInfo.blob());
-            formData.append("upload_preset", "tinymce_media_upload");
+                                    xhr.onload = () => {
+                                        if (xhr.status !== 200) {
+                                            reject(xhr.responseText);
+                                            return;
+                                        }
 
-            xhr.send(formData);
-        });
-    }
-});
-</script>
+                                        const json = JSON.parse(xhr.responseText);
+                                        resolve(json.secure_url);
+                                    };
+
+                                    xhr.onerror = () => reject("Upload failed");
+
+                                    formData.append("file", blobInfo.blob());
+                                    formData.append("upload_preset", "tinymce_media_upload");
+
+                                    xhr.send(formData);
+                                });
+                            }
+                        });
+                    </script>
 
 
 

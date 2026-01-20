@@ -1,5 +1,5 @@
 body{
-    background-color: whitesmoke;
+    background-color: #f7f6f1;
     color: black;
 }
 
@@ -43,14 +43,18 @@ a:hover{
 .entry-content img{
     max-width: 100%;
     height: auto;
-    display: block;
+    box-shadow: 0 0.4rem 0.9rem 0 rgba(0, 0, 0, 0.4);
 }
 
+
+.entry-content a{
+    all: revert;
+}
 
 .blackboard{
     display: flex;
     flex-direction: column;
-    background-color: #f7f6f1;
+    background-color: #f8f6eb;
     font-family:'Arial', 'Comic Sans', 'Chalkboard SE';
     border: solid 0.1rem darkgray;
     box-shadow: 0 0.4rem 0.9rem 0 rgba(0, 0, 0, 0.4);
@@ -80,6 +84,7 @@ a:hover{
     margin-left: 0.4rem;
     margin-right: 0.4rem;
 }
+
 
 .shadowed{
     box-shadow: 0 0.4rem 0.9rem 0 rgba(0, 0, 0, 0.4);
@@ -132,7 +137,7 @@ a:hover{
     justify-content: flex-end;
 }
 
-.blackboard .centered{
+.centered{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -424,6 +429,6 @@ a:hover{
 
 @media (max-width: 767.98px){
     .flow-wid-75{
-        width: 95%;
+        width: 100%;
     }
 }

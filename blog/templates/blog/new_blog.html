@@ -5,7 +5,7 @@
 
 {% block page_header %}
 
-<div class="p-3 mb-1 blackboard centered text-center">
+<div class="px-1 px-md-4 py-4 d-flex flex-column centered">
         <h1> Nuevo Blog </h1>
 </div>
 {% endblock page_header %}
@@ -13,8 +13,8 @@
 
 {% block content%}
 
-    <div class="p-3 mb-1 blackboard">
-        <div class="centered">
+    <div class="px-1 px-md-4 py-4 d-flex flex-column">
+        <div class="centered adjusted blackboard">
             <p>Título del blog</p>
             <form action="{% url 'blog:new_blog' %}" method='post' enctype='multipart/form-data'>
                     {% csrf_token %}

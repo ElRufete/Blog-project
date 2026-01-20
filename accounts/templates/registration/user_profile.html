@@ -20,7 +20,7 @@
     </div>
 {% endif %}
 
-<div class="p-3 mb-4 blackboard">
+<div class="px-1 px-md-4 py-4 d-flex flex-column">
     {% if request.user.is_authenticated %}
         {% if profile_user == request.user %}
             <div class="ms-auto">
@@ -47,7 +47,7 @@
         </div>
     </div>
     
-<div class="p-3 mb-4 blackboard">
+
     <div>
         <h4 class="centered">Blogs</h4>
     </div>
@@ -79,11 +79,11 @@
             <p>Aún no has creado ningún blog </p>
         {% endfor %}
     </div>     
-</div>
+
 
 {% if request.user.is_authenticated %}
         {% if request.user != profile_user %}
-        <div class="p-3 mb-4 blackboard">
+        <div class="px-1 px-md-4 py-4 d-flex flex-column">
             <div>
                 <h4 class="centered">Amigos en común</h4>
             </div>

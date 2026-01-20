@@ -5,7 +5,7 @@
 
 {% block page_header %}
 
-<div class="p-3 mb-1 blackboard centered text-center">
+<div class="px-1 px-md-4 py-4 d-flex flex-column centered">
         <h1> Editar perfil </h1>
 </div>
 {% endblock page_header %}
@@ -13,7 +13,7 @@
 
 {% block content%}
 
-    <div class="p-3 mb-1 blackboard">
+    <div class="px-1 px-md-4 py-4 d-flex flex-column blackboard centered adjusted">
         <div class="centered">
             <form action=
             "{% url 'accounts:edit_profile' request.user.id %}"

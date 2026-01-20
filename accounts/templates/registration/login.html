@@ -15,26 +15,27 @@
             {% endfor %}
         </div>
     {% endif %}
-    <div class="p-3 mb-1 blackboard adjusted centered">
+    <div class="px-1 px-md-4 py-4 d-flex flex-column adjusted">
         <h2 class="text-center">Inicia sesión en tu cuenta</h2>
     </div>
 {% endblock page_header %}
 
 {% block content%}
-    <div class="blackboard adjusted p-3 mb-2">
-        <div class="centered">
+    <div class="px-1 px-md-4 py-4 d-flex flex-column">
+        <div class="centered adjusted blackboard py-4">
             <form action="{% url 'accounts:login' %}" method='post'>
                 {% csrf_token %}
                 {% bootstrap_form form %}
                 {% bootstrap_button button_type="submit" content="Entrar" %}
             </form>
-        </div>
+        
     
-        <div class="message-link">
-            <p><small>¿Aún no tienes una cuenta?</small></p>
-            <a class="push-up" href="{% url 'accounts:register' %}">¡Regístrate!</a>
+            <div class="message-link">
+            <p class="mt-4"><small>¿Aún no tienes una cuenta?</small></p>
+            <a class="push-up small" href="{% url 'accounts:register' %}">¡Regístrate!</a>
             <p><small>¿Olvidaste tu contraseña?</small></p>
             <a class="push-up" href="{% url 'accounts:password_reset_request' %}">Restablecer contraseña</a>
+            </div>
         </div>
     </div>
     

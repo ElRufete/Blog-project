@@ -164,7 +164,7 @@ TINYMCE_DEFAULT_CONFIG = {
         "bold italic underline | forecolor backcolor fontsize | "
         "alignleft aligncenter alignright alignjustify | "
         "bullist numlist outdent indent | "
-        "link image | code | help"
+        "link image | help"
     ),
     "branding": False,
     "image_uploadtab": True,
@@ -193,6 +193,11 @@ BLEACH_CSS_SANITIZER = CSSSanitizer(
         "background-color",
         "font-size",
         "text-align",
+        "margin-left",
+        "margin-right",
+        "margin",
+        "float",
+        "display",
     ]
 )
 
