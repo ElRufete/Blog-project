@@ -1,0 +1,52 @@
+{% extends 'blog/layout.html' %}
+{% load timeago %}
+
+{% block page_header %}
+
+
+{% endblock page_header %}
+
+{% block content %}
+{% if messages %}
+
+    <div>
+        {% for message in messages %}
+            {% if 'friends' in message.tags %}
+                <div class="alert alert-{{ message.level_tag }}">
+                    {{message}}
+                </div>
+            {% endif %}                    
+        {% endfor %}
+    </div>
+{% endif %}
+
+<h2 class ="p-3 mb-1 mx-auto centered">Resultados de la búsqueda</h2>
+<div class="p-3 mb-1">
+    {% if searched %}
+        {% for blog in blogs %}
+            <div class="card shadowed m-4 block" style="width: 18rem;">
+                <img src="{{blog.banner_url}}" class="card-img-top" alt="Blog banner">
+                <div class="card-body">
+                    <h5 class="card-title"><strong>{{ blog.text }}</strong></h5>
+                    
+                    <p class="card-text">
+                        {{ blog.about | truncatechars:80 }}
+                    </p>
+                </div>
+                    <a href="{% url 'blog:entries_list' blog.id %}" class="stretched-link"></a>
+                    <div class="left-row card-footer">
+                        <a href="{% url 'accounts:user_profile' blog.author.id %}">
+                            <img src="{{ blog.author.avatar_small }}">
+                        </a>
+                    <p class="text-muted"><small>{{ blog.date_added | custom_time_since }}</small></p>
+                </div>
+            </div>
+        {% empty %}
+            <h3 class="centered mt-2 mb-2">No hay resultados para la búsqueda.</h3>
+        {% endfor %}
+    {% else %}
+            <h3 class="centered mt-2 mb-2">¡Ups! Parece que no has introducido ninguna búsqueda.</h3>
+    {% endif %}
+</div>
+
+{% endblock content %}

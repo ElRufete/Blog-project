@@ -1,5 +1,6 @@
 {% load static %}
 {% load django_bootstrap5 %}
+{% load bootstrap_icons %}
 
 <!DOCTYPE html>
 <html lang="es">
@@ -34,6 +35,15 @@
         <li class="nav-item">
           <a class="nav-link" href="{% url 'blog:blogs_list' %}">Blogs</a>
         </li>
+        <li class="nav-item">
+          <form class="d-flex adjusted" action="{% url 'blog:search_blogs' %}" method=POST>
+            {% csrf_token %} 
+            <input class="form-control me-2" type="search" placeholder="Buscar blogs" 
+            aria-labels="Buscar blogs" name="searched">
+            <button class="friends-row-button mt-1 mb-2" type="submit">{% bs_icon 'search' %}</button>
+          </form>
+        </li>
+
       </ul>
     </div>
     

@@ -7,12 +7,10 @@ from bleach.css_sanitizer import CSSSanitizer
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-#Nunca dejes la clave secreta expuesta en producción
-# Usa variables de entorno en Render:
-# En Render, la defines en el panel de Environment → SECRET_KEY
+
 SECRET_KEY = os.environ.get('SECRET_KEY', 'clave-de-desarrollo')
 
-#Desactiva el modo debug en producción
+
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 
@@ -89,7 +87,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'www.wsgi.application'
 
 
-# Base de datos (Render usará una variable DATABASE_URL si la defines)
+# Base de datos 
 
 if os.environ.get('RENDER'):
     DATABASES = {
@@ -108,7 +106,7 @@ else:
     }
 
 
-# Validación de contraseñas
+
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},

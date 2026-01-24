@@ -277,6 +277,15 @@ def clean_content(html):
             css_sanitizer=settings.BLEACH_CSS_SANITIZER,
             strip=True,
         )
+
+def search_blogs(request):
+    searched = request.GET.get('searched') or request.POST.get('searched')
+    if searched:
+        blogs = Blog.objects.filter(text__contains=searched)
+        context = {'blogs': blogs,'searched' : searched,}
+        return render(request, 'blog/search_blogs.html', context)
+    else:
+        return render(request, 'blog/search_blogs.html')
         
 
 
